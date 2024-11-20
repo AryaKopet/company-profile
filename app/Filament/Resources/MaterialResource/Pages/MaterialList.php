@@ -10,7 +10,7 @@ use App\Filament\Resources\MaterialResource;
 class MaterialList extends ManageRecords
 {
     protected static ?string $navigationIcon = 'heroicon-o-eye';
-    protected static string $resource = MaterialResource::class; // Pastikan ini diatur untuk resource yang benar
+    protected static string $resource = MaterialResource::class;
 
     protected function getTableColumns(): array
     {
