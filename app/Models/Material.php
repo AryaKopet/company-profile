@@ -9,7 +9,7 @@ class Material extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'barang', // Nama barang
-        'harga',  // Harga barang
+        'barang',
+        'harga',
     ];
 }
