@@ -123,4 +123,18 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Filament Branding (Tambahan)
+    |--------------------------------------------------------------------------
+    |
+    | Bagian ini adalah untuk mengatur nama aplikasi di dashboard Filament.
+    | Anda dapat mengganti nilai 'brand' dengan nama aplikasi yang diinginkan.
+    |
+    */
+
+    'filament' => [
+        'brand' => env('APP_NAME', 'PT. Sugi Harti Indonesia'),
+    ],
+
 ];

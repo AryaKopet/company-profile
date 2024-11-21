@@ -12,8 +12,8 @@ class AdminUserSeeder extends Seeder
     {
         User::create([
             'name' => 'Super Admin',
-            'email' => 'aryasokker23@gmail.com', // Ubah email ini sesuai keinginan Anda
-            'password' => Hash::make('arya2003ok'), // Ganti dengan password yang diinginkan
+            'email' => 'aryasokker23@gmail.com',
+            'password' => Hash::make('arya2003ok'),
         ]);
     }
 }

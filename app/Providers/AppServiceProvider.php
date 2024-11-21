@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Filament\Facades\Filament;
+use App\Filament\Pages\Dashboard;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Filament::serving(function () {
+            Filament::registerPages([
+                Dashboard::class, // Pastikan halaman Dashboard Anda terdaftar di sini
+            ]);
+        });
     }
 }
