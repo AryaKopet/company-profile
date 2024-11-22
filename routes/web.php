@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', [Dashboard::class, 'render'])->name('filament.pages.dashboard');
+Route::get('/admin/dashboard', [Dashboard::class, 'render'])->name('filament.pages.dashboard');
