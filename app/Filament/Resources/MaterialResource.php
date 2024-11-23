@@ -37,9 +37,9 @@ class MaterialResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('barang')->label('Nama Barang')->sortable(),
-                TextColumn::make('harga')->label('Harga')->sortable(),
+                TextColumn::make('id')->label('No')->sortable(),
+                TextColumn::make('barang')->label('Nama Barang')->sortable()->searchable(),
+                TextColumn::make('harga')->label('Harga')->sortable()->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.')),
                 TextColumn::make('created_at')->label('Tanggal Dibuat')->dateTime()->sortable(),
             ])
             ->filters([
@@ -47,7 +47,7 @@ class MaterialResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make(),    
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

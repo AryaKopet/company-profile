@@ -27,8 +27,7 @@ class AdminResource extends Resource
             Forms\Components\TextInput::make('email')
                 ->label('Email')
                 ->email()
-                ->required()
-                ->unique(),
+                ->required(),
             // Menambahkan field password
             Forms\Components\TextInput::make('password')
                 ->label('Password')
@@ -43,9 +42,9 @@ class AdminResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('name')->label('Nama Admin')->sortable(),
+                TextColumn::make('name')->label('Nama Admin')->sortable()->searchable(),
                 TextColumn::make('email')->label('Email')->sortable(),
-                TextColumn::make('created_at')->label('Tanggal Dibuat')->dateTime()->sortable(),
+                // TextColumn::make('created_at')->label('Tanggal Dibuat')->dateTime()->sortable(),
             ])
             ->filters([
                 // Filter dapat ditambahkan di sini jika diperlukan
