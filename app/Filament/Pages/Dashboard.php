@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
 use App\Filament\Widgets\MaterialStats;
+use App\Filament\Widgets\AdminStats;
 
 class Dashboard extends Page
 {
@@ -15,6 +16,7 @@ class Dashboard extends Page
     {
         return [
             MaterialStats::class,
+            AdminStats::class,
         ];
     }
 

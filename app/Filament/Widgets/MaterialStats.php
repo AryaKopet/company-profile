@@ -14,4 +14,8 @@ class MaterialStats extends Widget
     {
         return Material::count();
     }
+    public function getIcon(): string
+    {
+        return 'heroicon-o-cube'; // Nama ikon dari Heroicons
+    }
 }
