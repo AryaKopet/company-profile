@@ -1,5 +1,9 @@
 <?php
 
+use App\Filament\Widgets\StatistikWidget;
+use Filament\Widgets\StatsOverviewWidget;
+use PhpParser\Node\Stmt\Static_;
+
 return [
 
     /*
