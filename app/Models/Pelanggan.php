@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Pelanggan extends Model
 {
@@ -11,7 +11,8 @@ class Pelanggan extends Model
 
     protected $table = 'pelanggan';
 
-    // Kolom yang boleh diisi
+    protected $primaryKey = 'id_pelanggan';
+
     protected $fillable = [
         'nama',
         'email',

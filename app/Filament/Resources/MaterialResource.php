@@ -37,7 +37,7 @@ class MaterialResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('No')->sortable(),
+                TextColumn::make('id_material')->label('No')->sortable(),
                 TextColumn::make('barang')->label('Nama Barang')->sortable()->searchable(),
                 TextColumn::make('harga')->label('Harga')->sortable()->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.')),
                 TextColumn::make('created_at')->label('Tanggal Dibuat')->dateTime()->sortable(),
