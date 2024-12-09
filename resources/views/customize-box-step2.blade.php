@@ -32,7 +32,7 @@
             <select name="material_id" id="material_id" class="form-select" required>
                 <option value="" disabled selected>Pilih Material</option>
                 @foreach ($materials as $material)
-                    <option value="{{ $material->id }}">{{ $material->nama }}</option>
+                    <option value="{{ $material->id }}">{{ $material->barang }}</option>
                 @endforeach
             </select>
         </div>
@@ -43,7 +43,7 @@
             <select name="frame_id" id="frame_id" class="form-select" required>
                 <option value="" disabled selected>Pilih Frame</option>
                 @foreach ($frames as $frame)
-                    <option value="{{ $frame->id }}">{{ $frame->nama }}</option>
+                    <option value="{{ $frame->id }}">{{ $frame->barang }}</option>
                 @endforeach
             </select>
         </div>
