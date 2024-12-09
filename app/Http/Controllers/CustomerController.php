@@ -43,10 +43,12 @@ class CustomerController extends Controller
     // Menampilkan Step 2
     public function showStep2()
     {
-        // Ambil data material dan frame berdasarkan kategori
-        $materials = Material::where('kategori', 'material')->get();
-        $frames = Material::where('kategori', 'frame')->get();
-
+        // Ambil data material yang kategorinya 'material'
+        $materials = Material::where('kategori', 'Material')->get();
+    
+        // Ambil data frame yang kategorinya 'frame'
+        $frames = Material::where('kategori', 'Frame')->get();
+    
         return view('customize-box-step2', compact('materials', 'frames'));
     }
 
