@@ -82,6 +82,6 @@ class CustomerController extends Controller
         // Box::create($boxData);
 
         // Redirect ke halaman utama dengan notifikasi sukses
-        return redirect()->route('home')->with('success', 'Data box berhasil disimpan!');
+        return redirect('/')->with('success', 'Data box berhasil disimpan!');
     }
 }

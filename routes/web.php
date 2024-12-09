@@ -18,3 +18,5 @@ Route::post('/customize-box/step2', [CustomerController::class, 'submitStep2'])-
 Route::middleware(['web'])->group(function() {
     Route::post('/submit-step1', [CustomerController::class, 'submitStep1'])->name('customize.box.step1.submit');
 });
+Route::get('/customize-box/step-2', [CustomerController::class, 'step2'])->name('customize.step2');
+Route::post('/customize-box/step-2', [CustomerController::class, 'storeStep2'])->name('customize.storeStep2');
