@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Material;
-use App\Models\Pelanggan; // Pastikan Anda menggunakan model Pelanggan
+use App\Models\Pelanggan;
 
 class CustomerController extends Controller
 {
@@ -25,27 +25,27 @@ class CustomerController extends Controller
             'location' => 'required|in:jabodetabek,luar',
         ]);
 
-        // Simpan data ke tabel pelanggan
-        Pelanggan::create([
+        // Simpan data pelanggan ke database
+        $pelanggan = Pelanggan::create([
             'nama' => $validated['name'],
             'email' => $validated['email'],
             'no_telepon' => $validated['phone'],
             'lokasi' => $validated['location'],
         ]);
 
-        // Menyimpan session flash untuk menampilkan notifikasi sukses
-        session()->flash('success', 'Data berhasil ditambahkan!');
+        // Simpan data pelanggan di session untuk digunakan di Step 2
+        session(['pelanggan_id' => $pelanggan->id]);
 
-        // Redirect ke step 2
+        // Redirect ke Step 2
         return redirect()->route('customize.box.step2');
     }
 
     // Menampilkan Step 2
     public function showStep2()
     {
-        // Ambil data material dan frame dari tabel 'materials'
-        $materials = Material::where('type', 'material')->get();
-        $frames = Material::where('type', 'frame')->get();
+        // Ambil data material dan frame berdasarkan kategori
+        $materials = Material::where('kategori', 'material')->get();
+        $frames = Material::where('kategori', 'frame')->get();
 
         return view('customize-box-step2', compact('materials', 'frames'));
     }
@@ -53,7 +53,7 @@ class CustomerController extends Controller
     // Menangani form Step 2
     public function submitStep2(Request $request)
     {
-        // Validasi data dari step 2
+        // Validasi input dari form Step 2
         $validated = $request->validate([
             'material_id' => 'required|exists:materials,id',
             'frame_id' => 'required|exists:materials,id',
@@ -62,12 +62,26 @@ class CustomerController extends Controller
             'height' => 'required|numeric|min:1',
         ]);
 
-        // Ambil data dari session
-        $step1Data = session('step1');
+        // Ambil ID pelanggan dari session
+        $pelangganId = session('pelanggan_id');
+        if (!$pelangganId) {
+            return redirect()->route('customize.box.step1')->with('error', 'Data pelanggan tidak ditemukan. Silakan isi Step 1 terlebih dahulu.');
+        }
 
-        // Simpan atau proses data lebih lanjut sesuai kebutuhan
-        
-        // Contoh return ke hasil perhitungan
-        return view('result-box', compact('step1Data', 'validated'));
+        // Proses data Step 2
+        $boxData = [
+            'pelanggan_id' => $pelangganId,
+            'material_id' => $validated['material_id'],
+            'frame_id' => $validated['frame_id'],
+            'panjang' => $validated['length'],
+            'lebar' => $validated['width'],
+            'tinggi' => $validated['height'],
+        ];
+
+        // Contoh simpan data box ke database jika diperlukan
+        // Box::create($boxData);
+
+        // Redirect ke halaman utama dengan notifikasi sukses
+        return redirect()->route('home')->with('success', 'Data box berhasil disimpan!');
     }
 }

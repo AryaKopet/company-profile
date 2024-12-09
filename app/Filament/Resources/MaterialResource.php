@@ -24,6 +24,9 @@ class MaterialResource extends Resource
                 Forms\Components\TextInput::make('barang')
                     ->label('Nama Barang')
                     ->required(),
+                Forms\Components\TextInput::make('kategori')
+                    ->label('Kategori')
+                    ->required(),
                 Forms\Components\TextInput::make('harga')
                     ->label('Harga')
                     ->required()
@@ -37,6 +40,7 @@ class MaterialResource extends Resource
             ->columns([
                 TextColumn::make('id_material')->label('No')->sortable(),
                 TextColumn::make('barang')->label('Nama Barang')->sortable()->searchable(),
+                TextColumn::make('kategori')->label('Kategori')->sortable()->searchable(),
                 TextColumn::make('harga')->label('Harga')->sortable()->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.')),
                 TextColumn::make('created_at')->label('Tanggal Dibuat')->dateTime()->sortable(),
             ])

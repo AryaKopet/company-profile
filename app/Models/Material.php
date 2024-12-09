@@ -20,6 +20,7 @@ class Material extends Model
 
     protected $fillable = [
         'barang',
+        'kategori',
         'harga',
     ];
 }

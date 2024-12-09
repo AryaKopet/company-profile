@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('materials', function (Blueprint $table) {
-            $table->string('kategori')->after('barang')->nullable()->comment('Kategori material untuk filter');
+            $table->string('kategori')->after('barang')->comment('Kategori material untuk filter');
         });
     }
 
@@ -19,4 +19,5 @@ return new class extends Migration
             $table->dropColumn('kategori');
         });
     }
+
 };
