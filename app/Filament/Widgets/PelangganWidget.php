@@ -14,7 +14,7 @@ class PelangganWidget extends BaseWidget
             Card::make('Total Pelanggan', Pelanggan::count())
                 ->description('Pelanggan terdaftar')
                 ->icon('heroicon-o-users')
-                ->color('success'),
+                ->color('primary'),
         ];
     }
 }

@@ -14,7 +14,7 @@ class MaterialStats extends BaseWidget
             Card::make('Total Materials', Material::count())
                 ->description('Material Tersedia')
                 ->icon('heroicon-o-cube')
-                ->color('success'),
+                ->color('primary'),
         ];
     }
 }

@@ -14,7 +14,7 @@ class AdminStats extends BaseWidget
             Card::make('Total Admins', Admin::count())
                 ->description('Admin Terdaftar')
                 ->icon('heroicon-o-user')
-                ->color('success'), 
+                ->color('primary'), 
         ];
     }
 }
