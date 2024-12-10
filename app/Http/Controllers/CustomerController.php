@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Material;
 use App\Models\Pelanggan;
+use App\Models\Pesanan; // Tambahkan model Pesanan
 
 class CustomerController extends Controller
 {
@@ -43,12 +44,12 @@ class CustomerController extends Controller
     // Menampilkan Step 2
     public function showStep2()
     {
-        // Ambil data material yang kategorinya 'material'
+        // Ambil data material yang kategorinya 'Material'
         $materials = Material::where('kategori', 'Material')->get();
-    
-        // Ambil data frame yang kategorinya 'frame'
+
+        // Ambil data frame yang kategorinya 'Frame'
         $frames = Material::where('kategori', 'Frame')->get();
-    
+
         return view('customize-box-step2', compact('materials', 'frames'));
     }
 
@@ -70,20 +71,20 @@ class CustomerController extends Controller
             return redirect()->route('customize.box.step1')->with('error', 'Data pelanggan tidak ditemukan. Silakan isi Step 1 terlebih dahulu.');
         }
 
-        // Proses data Step 2
-        $boxData = [
-            'pelanggan_id' => $pelangganId,
-            'material_id' => $validated['material_id'],
-            'frame_id' => $validated['frame_id'],
+        // Simpan data ke tabel pesanan
+        Pesanan::create([
+            'id_pelanggan' => $pelangganId,
+            'bahan_material' => Material::find($validated['material_id'])->nama,
+            'frame' => Material::find($validated['frame_id'])->nama,
             'panjang' => $validated['length'],
             'lebar' => $validated['width'],
             'tinggi' => $validated['height'],
-        ];
+        ]);
 
-        // Contoh simpan data box ke database jika diperlukan
-        // Box::create($boxData);
+        // Hapus session pelanggan
+        session()->forget('pelanggan_id');
 
         // Redirect ke halaman utama dengan notifikasi sukses
-        return redirect('/')->with('success', 'Data box berhasil disimpan!');
+        return redirect('/')->with('success', 'Pesanan berhasil disimpan!');
     }
 }

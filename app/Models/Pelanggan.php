@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pesanan extends Model
+class Pelanggan extends Model
 {
     use HasFactory;
 
-    protected $table = 'pesanan';
+    protected $table = 'pelanggan';
+    protected $fillable = ['nama', 'email', 'no_telepon', 'lokasi'];
 
-    protected $fillable = [
-        'id_pelanggan',
-        'bahan_material',
-        'frame',
-        'panjang',
-        'lebar',
-        'tinggi',
-    ];
+    // Relasi ke Pesanan
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class, 'id_pelanggan', 'id');
+    }
 }
+

@@ -15,17 +15,18 @@ class CreatePesananTable extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->id('id_pesanan');
-            $table->unsignedBigInteger('id_pelanggan');
+            $table->unsignedBigInteger('id_pelanggan'); // Foreign key
             $table->string('bahan_material');
             $table->string('frame');
-            $table->integer('panjang'); // ukuran dalam mm
-            $table->integer('lebar');   // ukuran dalam mm
-            $table->integer('tinggi');  // ukuran dalam mm
+            $table->integer('panjang');
+            $table->integer('lebar');
+            $table->integer('tinggi');
             $table->timestamps();
-
-            // Foreign key
+        
+            // Relasi dengan tabel pelanggan
             $table->foreign('id_pelanggan')->references('id')->on('pelanggan')->onDelete('cascade');
         });
+        
     }
 
     /**
@@ -38,4 +39,3 @@ class CreatePesananTable extends Migration
         Schema::dropIfExists('pesanan');
     }
 }
-
