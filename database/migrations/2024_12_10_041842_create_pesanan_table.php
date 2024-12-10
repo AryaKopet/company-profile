@@ -15,16 +15,13 @@ class CreatePesananTable extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->id('id_pesanan');
-            $table->unsignedBigInteger('id_pelanggan'); // Foreign key
+            $table->foreignId('id_pelanggan')->constrained('pelanggan', 'id_pelanggan')->onDelete('cascade');
             $table->string('bahan_material');
             $table->string('frame');
             $table->integer('panjang');
             $table->integer('lebar');
             $table->integer('tinggi');
             $table->timestamps();
-        
-            // Relasi dengan tabel pelanggan
-            $table->foreign('id_pelanggan')->references('id')->on('pelanggan')->onDelete('cascade');
         });
         
     }

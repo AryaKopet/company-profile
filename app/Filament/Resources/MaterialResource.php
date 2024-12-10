@@ -42,7 +42,7 @@ class MaterialResource extends Resource
                 TextColumn::make('barang')->label('Nama Barang')->sortable()->searchable(),
                 TextColumn::make('kategori')->label('Kategori')->sortable()->searchable(),
                 TextColumn::make('harga')->label('Harga')->sortable()->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.')),
-                TextColumn::make('created_at')->label('Tanggal Dibuat')->dateTime()->sortable(),
+                TextColumn::make('updated_at')->label('Tanggal Input')->dateTime()->sortable(),
             ])
             ->filters([
                 //

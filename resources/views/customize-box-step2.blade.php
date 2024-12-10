@@ -25,7 +25,6 @@
     <h2 class="mb-4 text-center">Custom Bahan dan Ukuran Box</h2>
     <form action="{{ route('customize.storeStep2') }}" method="POST" class="shadow-lg p-4 bg-white rounded">
         @csrf
-
         <!-- Pilih Bahan Material -->
         <div class="mb-4">
             <label for="material_id" class="form-label">Bahan Material</label>
@@ -63,15 +62,14 @@
                 <input type="number" name="tinggi" id="tinggi" class="form-control" required>
             </div>
         </div>
-
-        <!-- Tombol -->
-        <div class="d-flex justify-content-between mt-4">
+        <div class="d-flex mt-4">
             <!-- Tombol Kembali -->
-            <a href="{{ url('/') }}" class="btn btn-warning px-4 py-2">Kembali</a>
+            <a href="{{ url('/') }}" class="btn btn-warning me-2 px-4 py-2">Kembali</a>
             <!-- Tombol Submit -->
             <button type="submit" class="btn btn-primary px-4 py-2">Submit</button>
         </div>
     </form>
+
 </div>
 @endsection
 </body>
