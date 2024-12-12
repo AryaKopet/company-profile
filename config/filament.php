@@ -34,7 +34,18 @@ return [
         // ],
 
     ],
-    'brand' => 'PT. Sugi Harti Indonesia',
+        /*
+    |--------------------------------------------------------------------------
+    | Filament
+    |--------------------------------------------------------------------------
+    |
+    | This configuration file is used to configure Filament for your application.
+    |
+    */
+
+    'brand' => 'PT Sugi Harti Indonesia',
+
+    // ... other configurations
 
     /*
     |--------------------------------------------------------------------------
