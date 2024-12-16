@@ -46,7 +46,7 @@
             <div class="col-md-6">
                 <div class="card shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0 text-center">Tolong isikan data diri anda</h4>
+                        <h4 class="mb-0 text-center">Data calon pelanggan</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('customize.box.step1.submit') }}" method="POST">

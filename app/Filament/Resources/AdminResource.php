@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminResource extends Resource
 {
     protected static ?string $model = Admin::class;
+    protected static ?string $navigationLabel = 'Marketing';
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
     public static function form(Form $form): Form
@@ -22,7 +23,7 @@ class AdminResource extends Resource
         return $form
         ->schema([
             Forms\Components\TextInput::make('name')
-                ->label('Nama Admin')
+                ->label('Nama Marketing')
                 ->required(),
             Forms\Components\TextInput::make('email')
                 ->label('Email')
@@ -42,7 +43,7 @@ class AdminResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('name')->label('Nama Admin')->sortable()->searchable(),
+                TextColumn::make('name')->label('Nama Marketing')->sortable()->searchable(),
                 TextColumn::make('email')->label('Email')->sortable(),
                 // TextColumn::make('created_at')->label('Tanggal Dibuat')->dateTime()->sortable(),
             ])
