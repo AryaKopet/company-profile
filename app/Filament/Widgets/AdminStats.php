@@ -11,7 +11,7 @@ class AdminStats extends BaseWidget
     protected function getCards(): array
     {
         return [
-            Card::make('Total Admins', Admin::count())
+            Card::make('Total Marketing', Admin::count())
                 ->description('Admin Terdaftar')
                 ->icon('heroicon-o-user')
                 ->color('primary'), 

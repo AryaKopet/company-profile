@@ -11,7 +11,7 @@ class MaterialStats extends BaseWidget
     protected function getCards(): array
     {
         return [
-            Card::make('Total Materials', Material::count())
+            Card::make('Total Material', Material::count())
                 ->description('Material Tersedia')
                 ->icon('heroicon-o-cube')
                 ->color('primary'),

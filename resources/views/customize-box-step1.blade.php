@@ -13,13 +13,13 @@
 </head>
 <style>
     .gambar {
-        width: 130px;
-        height: 130px;
+        width: 180px;
+        height: 150px;
     }
 </style>
 <body>
     <!-- Cek jika ada notifikasi sukses -->
-     @extends('layouts.app')
+    @extends('layouts.app')
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -46,7 +46,7 @@
             <div class="col-md-6">
                 <div class="card shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0 text-center">Data calon pelanggan</h4>
+                        <h4 class="mb-0 text-center">Tolong inputkan data anda</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('customize.box.step1.submit') }}" method="POST">
