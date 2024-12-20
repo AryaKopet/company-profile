@@ -23,4 +23,8 @@ class Dashboard extends Page
             PelangganWidget::class,
         ];
     }
+    protected function getColumns(): int
+    {
+        return 3;
+    }
 }

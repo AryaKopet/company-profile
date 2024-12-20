@@ -16,6 +16,9 @@
         width: 180px;
         height: 150px;
     }
+    body {
+        background-color: lightblue;
+    }
 </style>
 <body>
     <!-- Cek jika ada notifikasi sukses -->
