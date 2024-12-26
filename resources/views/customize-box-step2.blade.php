@@ -187,17 +187,28 @@
             const lebar = parseInt(document.getElementById('lebar').value) || 0;
             const tinggi = parseInt(document.getElementById('tinggi').value) || 0;
 
-            cube.style.width = `${lebar}px`;
-            cube.style.height = `${tinggi}px`;
+            const cube = document.getElementById('cube');
+            const scaleX = panjang / 100; // Skala panjang
+            const scaleY = tinggi / 100; // Skala tinggi
+            const scaleZ = lebar / 100; // Skala lebar
 
-            const depth = panjang / 2;
-            document.querySelector('.face.front').style.transform = `translateZ(${depth}px)`;
-            document.querySelector('.face.back').style.transform = `rotateY(180deg) translateZ(${depth}px)`;
-            document.querySelector('.face.right').style.transform = `rotateY(90deg) translateZ(${lebar / 2}px)`;
-            document.querySelector('.face.left').style.transform = `rotateY(-90deg) translateZ(${lebar / 2}px)`;
-            document.querySelector('.face.top').style.transform = `rotateX(90deg) translateZ(${tinggi / 2}px)`;
-            document.querySelector('.face.bottom').style.transform = `rotateX(-90deg) translateZ(${tinggi / 2}px)`;
+            // Update skala dan rotasi kubus
+            cube.style.transform = `
+                rotateX(-20deg) 
+                rotateY(30deg)
+            `;
+            cube.style.width = `${100 * scaleX}px`;
+            cube.style.height = `${100 * scaleY}px`;
 
+            // Update posisi tiap sisi
+            document.querySelector('.face.front').style.transform = `translateZ(${50 * scaleZ}px)`;
+            document.querySelector('.face.back').style.transform = `rotateY(180deg) translateZ(${50 * scaleZ}px)`;
+            document.querySelector('.face.right').style.transform = `rotateY(90deg) translateZ(${50 * scaleX}px)`;
+            document.querySelector('.face.left').style.transform = `rotateY(-90deg) translateZ(${50 * scaleX}px)`;
+            document.querySelector('.face.top').style.transform = `rotateX(90deg) translateZ(${50 * scaleY}px)`;
+            document.querySelector('.face.bottom').style.transform = `rotateX(-90deg) translateZ(${50 * scaleY}px)`;
+
+            // Update dimensi pada label
             document.getElementById('box-dimensions').textContent = `${panjang} x ${lebar} x ${tinggi} mm`;
         }
 

@@ -13,4 +13,7 @@ Route::get('/custom-box/2', [CustomerController::class, 'showStep2'])->name('cus
 Route::post('/customize-box/step2', [CustomerController::class, 'submitStep2'])->name('customize.storeStep2');
 Route::get('/admin/dashboard', [Dashboard::class, 'render'])->name('filament.pages.dashboard');
 
+Route::fallback(function(){
+    return view('error');
+}); // ubah default error 404 page
 
