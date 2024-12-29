@@ -18,12 +18,18 @@ class CustomerController extends Controller
     // Menangani form Step 1
     public function submitStep1(Request $request)
     {
-        // Validasi input
+        // Validasi input dengan custom message
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:pelanggan,email',
             'phone' => 'required|string|max:20',
             'location' => 'required|in:jabodetabek,luar',
+        ], [
+            'email.unique' => 'Email sudah digunakan, harap coba lagi.',
+            'email.required' => 'Email wajib diisi.',
+            'name.required' => 'Nama wajib diisi.',
+            'phone.required' => 'Nomor telepon wajib diisi.',
+            'location.required' => 'Lokasi wajib dipilih.',
         ]);
 
         // Simpan data pelanggan ke database
@@ -40,6 +46,7 @@ class CustomerController extends Controller
         // Redirect ke Step 2
         return redirect()->route('customize.box.step2');
     }
+
 
 
     // Menampilkan Step 2
