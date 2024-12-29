@@ -31,39 +31,44 @@
             height: 100px;
             transform-style: preserve-3d;
             transform: rotateX(-20deg) rotateY(30deg);
-            transition: transform 0.2s;
+            transition: transform 0.2s, width 0.2s, height 0.2s;
         }
 
         .face {
             position: absolute;
             width: 100px;
             height: 100px;
-            background: rgba(0, 123, 255, 0.1);
-            border: 1px solid #007bff;
+            border: 1px solid #555;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
         }
 
         .face.front {
+            background-color: yellow;
             transform: translateZ(50px);
         }
 
         .face.back {
+            background-color: yellow;
             transform: rotateY(180deg) translateZ(50px);
         }
 
         .face.right {
+            background-color: green;
             transform: rotateY(90deg) translateZ(50px);
         }
 
         .face.left {
+            background-color: green;
             transform: rotateY(-90deg) translateZ(50px);
         }
 
         .face.top {
+            background-color: blue;
             transform: rotateX(90deg) translateZ(50px);
         }
 
         .face.bottom {
+            background-color: blue;
             transform: rotateX(-90deg) translateZ(50px);
         }
 
@@ -94,6 +99,9 @@
                     </div>
                 </div>
                 <div class="dimensions" id="box-dimensions">0 x 0 x 0 mm</div>
+                <div class="notes">
+                    <p>catatan: warna sesuai ukuran: <br>panjang = kuning <br>lebar = biru <br>tinggi = hijau</p>
+                </div>
             </div>
 
             <!-- Kolom Kanan: Form -->
@@ -193,10 +201,7 @@
             const scaleZ = lebar / 100; // Skala lebar
 
             // Update skala dan rotasi kubus
-            cube.style.transform = `
-                rotateX(-20deg) 
-                rotateY(30deg)
-            `;
+            cube.style.transform = `rotateX(-20deg) rotateY(30deg)`;
             cube.style.width = `${100 * scaleX}px`;
             cube.style.height = `${100 * scaleY}px`;
 
