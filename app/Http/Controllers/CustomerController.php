@@ -59,8 +59,8 @@ class CustomerController extends Controller
     }
 
     // Menangani form Step 2
-    public function submitStep2(Request $request){
-        // Validasi input dari form Step 2
+    public function submitStep2(Request $request)
+    {
         $validated = $request->validate([
             'material_id' => 'required|exists:materials,id',
             'frame_id' => 'required|exists:materials,id',
@@ -75,8 +75,8 @@ class CustomerController extends Controller
             return redirect()->route('customize.box.step1')->with('error', 'Data pelanggan tidak ditemukan. Silakan isi Step 1 terlebih dahulu.');
         }
 
-        // Simpan data ke tabel pesanan
-        $pesanan = Pesanan::create([
+        // Simpan data pesanan ke tabel pesanan
+        Pesanan::create([
             'id_pelanggan' => $pelangganId,
             'bahan_material' => Material::find($validated['material_id'])->barang,
             'frame' => Material::find($validated['frame_id'])->barang,
@@ -85,14 +85,7 @@ class CustomerController extends Controller
             'tinggi' => $validated['tinggi'],
         ]);
 
-        // Jika data berhasil disimpan
-        if ($pesanan) {
-            session()->forget('pelanggan_id');
-            return redirect('/')->with('success', 'Pesanan berhasil disimpan!');
-        }
-
-        return back()->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        return redirect('/')->with('success', 'Pesanan berhasil disimpan!');
     }
-
 
 }
