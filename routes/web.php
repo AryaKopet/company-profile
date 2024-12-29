@@ -15,5 +15,5 @@ Route::get('/admin/dashboard', [Dashboard::class, 'render'])->name('filament.pag
 
 Route::fallback(function(){
     return view('error');
-}); // ubah default error 404 page
+}); // route alamat error
 
