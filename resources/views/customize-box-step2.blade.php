@@ -128,15 +128,15 @@
                             <div class="row mb-4">
                                 <div class="col-md-4">
                                     <label for="panjang" class="form-label">Panjang (mm)</label>
-                                    <input type="number" name="panjang" id="panjang" class="form-control" required>
+                                    <input type="number" name="length" id="panjang" class="form-control" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="lebar" class="form-label">Lebar (mm)</label>
-                                    <input type="number" name="lebar" id="lebar" class="form-control" required>
+                                    <input type="number" name="width" id="lebar" class="form-control" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="tinggi" class="form-label">Tinggi (mm)</label>
-                                    <input type="number" name="tinggi" id="tinggi" class="form-control" required>
+                                    <input type="number" name="height" id="tinggi" class="form-control" required>
                                 </div>
                             </div>
                             <div class="d-flex mt-4">

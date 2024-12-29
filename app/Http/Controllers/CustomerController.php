@@ -18,13 +18,15 @@ class CustomerController extends Controller
     // Menangani form Step 1
     public function submitStep1(Request $request)
     {
+        // Validasi input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:pelanggan,email',
             'phone' => 'required|string|max:20',
             'location' => 'required|in:jabodetabek,luar',
         ]);
 
+        // Simpan data pelanggan ke database
         $pelanggan = Pelanggan::create([
             'nama' => $validated['name'],
             'email' => $validated['email'],
@@ -32,10 +34,13 @@ class CustomerController extends Controller
             'lokasi' => $validated['location'],
         ]);
 
+        // Simpan ID pelanggan ke session
         session(['pelanggan_id' => $pelanggan->id]);
 
+        // Redirect ke Step 2
         return redirect()->route('customize.box.step2');
     }
+
 
     // Menampilkan Step 2
     public function showStep2()
@@ -47,17 +52,14 @@ class CustomerController extends Controller
     }
 
     // Menangani form Step 2
-    public function submitStep2(Request $request)
-    {
-        // Log request data untuk memastikan data terkirim
-
+    public function submitStep2(Request $request){
         // Validasi input dari form Step 2
         $validated = $request->validate([
             'material_id' => 'required|exists:materials,id',
             'frame_id' => 'required|exists:materials,id',
-            'length' => 'required|numeric|min:1',
-            'width' => 'required|numeric|min:1',
-            'height' => 'required|numeric|min:1',
+            'panjang' => 'required|numeric|min:1',
+            'lebar' => 'required|numeric|min:1',
+            'tinggi' => 'required|numeric|min:1',
         ]);
 
         // Ambil ID pelanggan dari session
@@ -69,11 +71,11 @@ class CustomerController extends Controller
         // Simpan data ke tabel pesanan
         $pesanan = Pesanan::create([
             'id_pelanggan' => $pelangganId,
-            'bahan_material' => Material::find($validated['material_id'])->nama,
-            'frame' => Material::find($validated['frame_id'])->nama,
-            'panjang' => $validated['length'],
-            'lebar' => $validated['width'],
-            'tinggi' => $validated['height'],
+            'bahan_material' => Material::find($validated['material_id'])->barang,
+            'frame' => Material::find($validated['frame_id'])->barang,
+            'panjang' => $validated['panjang'],
+            'lebar' => $validated['lebar'],
+            'tinggi' => $validated['tinggi'],
         ]);
 
         // Jika data berhasil disimpan
