@@ -84,7 +84,7 @@
 
     @section('content')
     <div class="container mt-5">
-        <h3 class="text-center">Interaktif Kubus Dimensi</h3>
+        <h3 class="text-center mb-5">Custom Material dan Dimensi Box</h3>
         <div class="row">
             <!-- Kolom Kiri: Preview Kubus -->
             <div class="col-md-6 d-flex flex-column align-items-center">
@@ -108,11 +108,17 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <h4 class="card-title text-center">Perhitungan Harga Material Box</h4>
+                        <h4 class="card-title text-center">Perhitungan Dimensi dan Material Box</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('customize.storeStep2') }}" method="POST">
                             @csrf
+                            <!-- Field Email -->
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $email ?? '') }}" required>
+                            </div>
+                            <!-- Bahan Material -->
                             <div class="mb-4">
                                 <label for="material_id" class="form-label">Bahan Material</label>
                                 <select name="material_id" id="material_id" class="form-select" required>
@@ -122,7 +128,7 @@
                                     @endforeach
                                 </select>
                             </div>
-
+                            <!-- Frame -->
                             <div class="mb-4">
                                 <label for="frame_id" class="form-label">Frame</label>
                                 <select name="frame_id" id="frame_id" class="form-select" required>
@@ -132,7 +138,7 @@
                                     @endforeach
                                 </select>
                             </div>
-
+                            <!-- Dimensi -->
                             <div class="row mb-4">
                                 <div class="col-md-4">
                                     <label for="panjang" class="form-label">Panjang (mm)</label>
@@ -148,7 +154,7 @@
                                 </div>
                             </div>
                             <div class="d-flex mt-4">
-                                <a href="{{ url('/') }}" class="btn btn-warning me-2 px-4 py-2">Kembali</a>
+                                <a href="{{ url('/') }}" class="btn btn-secondary me-2 px-4 py-2">Kembali</a>
                                 <button type="submit" class="btn btn-primary px-4 py-2">Submit</button>
                             </div>
                         </form>
