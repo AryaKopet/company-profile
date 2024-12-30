@@ -142,21 +142,31 @@
                             <div class="row mb-4">
                                 <div class="col-md-4">
                                     <label for="panjang" class="form-label">Panjang (mm)</label>
-                                    <input type="number" name="length" id="panjang" class="form-control" required>
+                                    <input type="number" name="panjang" id="panjang" class="form-control" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="lebar" class="form-label">Lebar (mm)</label>
-                                    <input type="number" name="width" id="lebar" class="form-control" required>
+                                    <input type="number" name="lebar" id="lebar" class="form-control" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="tinggi" class="form-label">Tinggi (mm)</label>
-                                    <input type="number" name="height" id="tinggi" class="form-control" required>
+                                    <input type="number" name="tinggi" id="tinggi" class="form-control" required>
                                 </div>
                             </div>
                             <div class="d-flex mt-4">
                                 <a href="{{ url('/') }}" class="btn btn-secondary me-2 px-4 py-2">Kembali</a>
                                 <button type="submit" class="btn btn-primary px-4 py-2">Submit</button>
                             </div>
+                            <br>
+                            @if($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>

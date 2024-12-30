@@ -65,8 +65,8 @@ class CustomerController extends Controller
     {
         $validated = $request->validate([
             'email' => 'required|email|exists:pelanggan,email', // Pastikan email terdaftar di tabel pelanggan
-            'bahan_material' => 'required|string',
-            'frame' => 'required|string',
+            'material_id' => 'required|exists:materials,id', // Validasi material ID
+            'frame_id' => 'required|exists:materials,id', // Validasi frame ID
             'panjang' => 'required|integer',
             'lebar' => 'required|integer',
             'tinggi' => 'required|integer'

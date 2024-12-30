@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {
-    return view('welcome')->name('landing-page');
+    return view('welcome');
 }); // route awal halaman
 Route::fallback(function(){
     return view('error');
