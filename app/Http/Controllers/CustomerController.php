@@ -31,7 +31,6 @@ class CustomerController extends Controller
             'phone.required' => 'Nomor telepon wajib diisi.',
             'location.required' => 'Lokasi wajib dipilih.',
         ]);
-        
 
         // Simpan data pelanggan ke database
         $pelanggan = Pelanggan::create([
@@ -43,13 +42,11 @@ class CustomerController extends Controller
 
         // Simpan email ke session
         $request->session()->put('email', $request->email);
-
+        
         // Redirect ke Step 2
         return redirect()->route('customize.box.step2');
     }
-
-
-
+    
     // Menampilkan Step 2
     public function showStep2(Request $request)
     {
@@ -57,21 +54,32 @@ class CustomerController extends Controller
         $frames = Material::where('kategori', 'Frame')->get();
         $email = $request->session()->get('email');
 
+        if (!$email) {
+            return redirect()->route('customize.box.step1')->withErrors('Silakan lengkapi Step sebelumnya terlebih dahulu.');
+        }
+
         return view('customize-box-step2', compact('email','materials', 'frames'));
     }
-
+    
     // Menangani form Step 2
     public function submitStep2(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email|exists:pelanggan,email', // Pastikan email terdaftar di tabel pelanggan
-            'material_id' => 'required|exists:materials,id', // Validasi material ID
-            'frame_id' => 'required|exists:materials,id', // Validasi frame ID
-            'panjang' => 'required|integer',
-            'lebar' => 'required|integer',
-            'tinggi' => 'required|integer'
+            'email' => 'required|email|exists:pelanggan,email', // Validasi bahwa email terdaftar di tabel pelanggan
+            'material_id' => 'required|exists:materials,id', // Validasi material_id
+            'frame_id' => 'required|exists:materials,id', // Validasi frame_id
+            'panjang' => 'required|integer|min:1', // Validasi panjang tidak boleh 0 atau negatif
+            'lebar' => 'required|integer|min:1', // Validasi lebar tidak boleh 0 atau negatif
+            'tinggi' => 'required|integer|min:1', // Validasi tinggi tidak boleh 0 atau negatif
+        ], [
+            'email.exists' => 'Email tidak dapat ditemukan. Silakan lengkapi data pada step sebelumnya.',
+            'material_id.exists' => 'Material tidak valid.',
+            'frame_id.exists' => 'Frame tidak valid.',
+            'panjang.min' => 'Panjang harus lebih besar dari 0.',
+            'lebar.min' => 'Lebar harus lebih besar dari 0.',
+            'tinggi.min' => 'Tinggi harus lebih besar dari 0.',
         ]);
-
+        
         // Simpan data pesanan ke tabel pesanan
         Pesanan::create([
             'email' => $request->email,
@@ -81,8 +89,8 @@ class CustomerController extends Controller
             'lebar' => $validated['lebar'],
             'tinggi' => $validated['tinggi'],
         ]);
-
-        return redirect()->route('landing-page')->with('success', 'Pesanan berhasil disimpan!');
+    
+        return redirect('/')->with('success', 'Pesanan berhasil disimpan!');
     }
 
 }

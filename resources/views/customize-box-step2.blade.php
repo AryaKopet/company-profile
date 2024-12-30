@@ -113,19 +113,23 @@
                     <div class="card-body">
                         <form action="{{ route('customize.storeStep2') }}" method="POST">
                             @csrf
-                            <!-- Field Email -->
+                            <!-- Email -->
                             <div class="mb-4">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $email ?? '') }}" required>
                             </div>
+                            <!-- Memastikan pengambilan data benar -->
+                            <!-- Memastikan elemen select memuat data dari database -->
                             <!-- Bahan Material -->
                             <div class="mb-4">
                                 <label for="material_id" class="form-label">Bahan Material</label>
                                 <select name="material_id" id="material_id" class="form-select" required>
                                     <option value="" disabled selected>Pilih Material</option>
-                                    @foreach ($materials as $material)
+                                    @forelse ($materials as $material)
                                         <option value="{{ $material->id }}">{{ $material->barang }}</option>
-                                    @endforeach
+                                    @empty
+                                        <option value="" disabled>Tidak ada material tersedia</option>
+                                    @endforelse
                                 </select>
                             </div>
                             <!-- Frame -->
@@ -133,9 +137,11 @@
                                 <label for="frame_id" class="form-label">Frame</label>
                                 <select name="frame_id" id="frame_id" class="form-select" required>
                                     <option value="" disabled selected>Pilih Frame</option>
-                                    @foreach ($frames as $frame)
+                                    @forelse ($frames as $frame)
                                         <option value="{{ $frame->id }}">{{ $frame->barang }}</option>
-                                    @endforeach
+                                    @empty
+                                        <option value="" disabled>Tidak ada frame tersedia</option>
+                                    @endforelse
                                 </select>
                             </div>
                             <!-- Dimensi -->
@@ -154,7 +160,7 @@
                                 </div>
                             </div>
                             <div class="d-flex mt-4">
-                                <a href="{{ url('/') }}" class="btn btn-secondary me-2 px-4 py-2">Kembali</a>
+                                <a href="{{ url('/custom-box') }}" class="btn btn-secondary me-2 px-4 py-2">Kembali</a>
                                 <button type="submit" class="btn btn-primary px-4 py-2">Submit</button>
                             </div>
                             <br>
