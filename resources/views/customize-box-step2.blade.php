@@ -119,7 +119,7 @@
                                 <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $email ?? '') }}" required>
                             </div>
                             <!-- Memastikan pengambilan data benar -->
-                            <!-- Memastikan elemen select memuat data dari database -->
+                            <!-- Memastikan elemen select memuat data bahan material dan frame dari database -->
                             <!-- Bahan Material -->
                             <div class="mb-4">
                                 <label for="material_id" class="form-label">Bahan Material</label>
@@ -135,7 +135,7 @@
                             <!-- Frame -->
                             <div class="mb-4">
                                 <label for="frame_id" class="form-label">Frame</label>
-                                <select name="frame_id" id="frame_id" class="form-select" required>
+                                <select name="frame" id="frame_id" class="form-select" required>
                                     <option value="" disabled selected>Pilih Frame</option>
                                     @forelse ($frames as $frame)
                                         <option value="{{ $frame->id }}">{{ $frame->barang }}</option>
