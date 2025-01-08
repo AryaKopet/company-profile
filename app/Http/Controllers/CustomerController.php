@@ -63,11 +63,11 @@ class CustomerController extends Controller
     
     // Menangani form Step 2
     public function submitStep2(Request $request)
-    {
+    {   
         $validated = $request->validate([
             'email' => 'required|email|exists:pelanggan,email', // Validasi email terdaftar di tabel pelanggan
-            'bahan_material' => 'required|exists:materials,kategori',
-            'frame' => 'required|exists:materials,kategori',
+            'material_id' => 'required',
+            'frame' => 'required',
             'panjang' => 'required|integer|min:1', // Validasi panjang tidak boleh 0 atau negatif
             'lebar' => 'required|integer|min:1', // Validasi lebar tidak boleh 0 atau negatif
             'tinggi' => 'required|integer|min:1', // Validasi tinggi tidak boleh 0 atau negatif
@@ -84,7 +84,7 @@ class CustomerController extends Controller
         Pesanan::create([
             'email' => $request->email,
             'bahan_material' => Material::find($validated['material_id'])->barang,
-            'frame' => Material::find($validated['frame_id'])->barang,
+            'frame' => Material::find($validated['frame'])->barang,
             'panjang' => $validated['panjang'],
             'lebar' => $validated['lebar'],
             'tinggi' => $validated['tinggi'],

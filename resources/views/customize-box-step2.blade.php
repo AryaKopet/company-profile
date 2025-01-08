@@ -126,7 +126,7 @@
                                 <select name="material_id" id="material_id" class="form-select" required>
                                     <option value="" disabled selected>Pilih Material</option>
                                     @forelse ($materials as $material)
-                                        <option value="{{ $material->id }}">{{ $material->barang }}</option>
+                                        <option value="{{ $material->id_material }}">{{ $material->barang }}</option>
                                     @empty
                                         <option value="" disabled>Tidak ada material tersedia</option>
                                     @endforelse
@@ -138,7 +138,7 @@
                                 <select name="frame" id="frame_id" class="form-select" required>
                                     <option value="" disabled selected>Pilih Frame</option>
                                     @forelse ($frames as $frame)
-                                        <option value="{{ $frame->id }}">{{ $frame->barang }}</option>
+                                        <option value="{{ $frame->id_material }}">{{ $frame->barang }}</option>
                                     @empty
                                         <option value="" disabled>Tidak ada frame tersedia</option>
                                     @endforelse
