@@ -3,10 +3,6 @@
 namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
-use Illuminate\Support\Facades\Log;
-use App\Filament\Widgets\MaterialStats;
-use App\Filament\Widgets\AdminStats;
-use App\Filament\Widgets\PelangganWidget;
 
 class Dashboard extends Page
 {

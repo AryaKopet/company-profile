@@ -11,7 +11,6 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Navigation\NavigationGroup;
 use Filament\Support\Colors\Color;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -20,13 +19,14 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\MenuItem;
 
 class AdminPanelProvider extends PanelProvider
-{
+{   
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->profile(isSimple: false)
+            // ->profile(isSimple: false)
             ->id('admin')
             ->path('admin')
             ->login()
@@ -39,6 +39,19 @@ class AdminPanelProvider extends PanelProvider
                 // 'success' => Color::Emerald,
                 // 'warning' => Color::Orange,
             ])
+            // ->brandName('PT Sugi Harti Indonesia')
+            ->userMenuItems([
+                'logout' => MenuItem::make()->label('Log out')
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Settings')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    // ->url(fn (): string => EditProfile::getUrl())
+            ])
+            ->favicon(asset('assets/logo.png'))
+            ->brandLogo(asset('assets/logo.png'))
+            ->brandLogoHeight('65px')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

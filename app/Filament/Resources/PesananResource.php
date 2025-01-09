@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PesananResource\Pages;
-use App\Filament\Resources\PesananResource\RelationManagers;
 use App\Models\Pesanan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PesananResource extends Resource
 {
@@ -75,6 +72,7 @@ class PesananResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
