@@ -9,6 +9,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Navigation\NavigationGroup;
 use Filament\Support\Colors\Color;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -28,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                '' => color::Blue,
+                'primary' => color::Emerald,
                 // 'danger' => Color::Rose,
                 // 'gray' => Color::Gray,
                 // 'info' => Color::Blue,
