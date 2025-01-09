@@ -16,8 +16,9 @@ use Filament\Tables\Columns\TextColumn;
 class MaterialResource extends Resource
 {
     protected static ?string $model = Material::class;
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $navigationIcon = 'heroicon-o-folder';
     protected static ?string $navigationLabel = 'Material';
+    protected static ?string $navigationGroup = 'Data Master';
     public static function form(Form $form): Form
     {
         return $form

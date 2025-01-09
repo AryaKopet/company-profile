@@ -3,6 +3,9 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Admin;
+use App\Models\Material;
+use App\Models\Pelanggan;
+use Filament\Support\Enums\IconPosition;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -11,13 +14,17 @@ class AppWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Marketing', Admin::count())
-            ->description('Total marketing terdaftar')
-            ->descriptionIcon('heroicon-m-user-group')
+            Stat::make('Material', Material::count())
+            ->description('Material tersedia')
+            ->descriptionIcon('heroicon-o-folder', IconPosition::Before)
             ->color('success'),
             Stat::make('Marketing', Admin::count())
-            ->description('Total marketing terdaftar')
-            ->descriptionIcon('heroicon-m-user-group')
+            ->description('Marketing terdaftar')
+            ->descriptionIcon('heroicon-m-user-group',IconPosition::Before)
+            ->color('success'),
+            Stat::make('Calon Pelanggan', Pelanggan::count())
+            ->description('Calon pelanggan')
+            ->descriptionIcon('heroicon-o-users',IconPosition::Before)
             ->color('success')
         ];
     }

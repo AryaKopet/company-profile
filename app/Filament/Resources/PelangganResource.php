@@ -14,9 +14,9 @@ use Filament\Tables\Columns\TextColumn;
 class PelangganResource extends Resource
 {
     protected static ?string $model = Pelanggan::class;
-    protected static ?string $navigationLabel = 'Data Pelanggan';
+    protected static ?string $navigationLabel = 'Pelanggan';
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'Customers';
+    protected static ?string $navigationGroup = 'Shop';
 
     public static function form(Form $form): Form
     {

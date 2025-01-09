@@ -18,7 +18,11 @@ class PesananResource extends Resource
     protected static ?string $model = Pesanan::class;
     protected static ?string $navigationLabel = 'Pesanan';
     protected static ?string $navigationIcon = 'heroicon-m-shopping-bag';
-    protected static ?string $navigationGroup = 'Customers';
+    public static function getNavigationBadge(): ?string
+    {
+        return Pesanan::count();
+    }
+    protected static ?string $navigationGroup = 'Shop';
 
     public static function form(Form $form): Form
     {
