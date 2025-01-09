@@ -14,15 +14,6 @@ class Dashboard extends Page
     protected static ?string $navigationLabel = 'Dashboard';
     protected static string $view = 'filament.pages.dashboard';
 
-    protected function getWidgets(): array
-    {
-        Log::info('Dashboard widgets are being loaded');
-        return [
-            MaterialStats::class,
-            AdminStats::class,
-            PelangganWidget::class,
-        ];
-    }
     protected function getColumns(): int
     {
         return 3;
