@@ -50,8 +50,9 @@ class AdminPanelProvider extends PanelProvider
                     // ->url(fn (): string => EditProfile::getUrl())
             ])
             ->favicon(asset('assets/logo.png'))
-            ->brandLogo(asset('assets/logo.png'))
-            ->brandLogoHeight('65px')
+            // ->brandLogo(asset('assets/logo.png'))
+            // ->brandLogoHeight('65px')
+            ->brandName('PT Sugi Harti Indonesia')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
