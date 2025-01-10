@@ -17,10 +17,13 @@ class PesananController extends Controller
      */
     public function index()
     {
-        //get all posts
         $pesanans = Pesanan::latest()->paginate(5);
-
-        //return collection of posts as a resource
         return new PesananResource(true, 'List Data Pesanan', $pesanans);
+    }
+    
+    public function show($id)
+    {
+        $pesanans = Pesanan::find($id);
+        return new PesananResource(true, 'Detail Data Materials', $pesanans);
     }
 }
