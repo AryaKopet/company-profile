@@ -16,7 +16,7 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        $pelanggans = Pelanggan::orderBy('id_material', 'asc')->paginate(5);
+        $pelanggans = Pelanggan::orderBy('id_pelanggan', 'asc')->paginate(5);
         return new PelangganResource(true, 'List Data Pelanggan', $pelanggans);
     }
     
