@@ -1,4 +1,4 @@
-<?php
+<?php 
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -34,16 +34,10 @@ class MaterialResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // Only return the necessary data fields
         return [
-            'data' => $this->resource->map(function ($material) {
-                return [
-                    'id_material' => $material->id_material,
-                    'barang' => $material->barang,
-                    'kategori' => $material->kategori,
-                    'harga' => $material->harga,
-                ];
-            }),
+            'success'   => $this->status,
+            'message'   => $this->message,
+            'data'      => $this->resource
         ];
     }
 }

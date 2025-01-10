@@ -20,4 +20,12 @@ class MaterialController extends Controller
         // Return the data using the modified MaterialResource
         return new MaterialResource(true, 'List Data Materials', $materials);
     }
+    public function show($id)
+    {
+        //find post by ID
+        $post = Material::find($id);
+
+        //return single post as a resource
+        return new MaterialResource(true, 'Detail Data Materials', $post);
+    }
 }
