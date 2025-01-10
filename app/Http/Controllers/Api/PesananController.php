@@ -17,10 +17,10 @@ class PesananController extends Controller
      */
     public function index()
     {
-        $pesanans = Pesanan::latest()->paginate(5);
+        $pesanans = Pesanan::orderBy('id_material', 'asc')->paginate(5);
         return new PesananResource(true, 'List Data Pesanan', $pesanans);
     }
-    
+
     public function show($id)
     {
         $pesanans = Pesanan::find($id);
