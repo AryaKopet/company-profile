@@ -8,3 +8,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 Route::apiResource('materials', App\Http\Controllers\Api\MaterialController::class);
 Route::apiResource('pesanans', App\Http\Controllers\Api\PesananController::class);
+Route::apiResource('pelanggans', App\Http\Controllers\Api\PelangganController::class);
