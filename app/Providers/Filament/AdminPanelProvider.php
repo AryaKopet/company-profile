@@ -39,7 +39,6 @@ class AdminPanelProvider extends PanelProvider
                 // 'success' => Color::Emerald,
                 // 'warning' => Color::Orange,
             ])
-            // ->brandName('PT Sugi Harti Indonesia'
             ->userMenuItems([
             ])
             ->userMenuItems([
