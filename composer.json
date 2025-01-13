@@ -8,6 +8,7 @@
         "php": "^8.2",
         "blade-ui-kit/blade-heroicons": "^2.5",
         "filament/filament": "^3.2",
+        "joaopaulolndev/filament-edit-profile": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9"

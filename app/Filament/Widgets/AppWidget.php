@@ -17,15 +17,16 @@ class AppWidget extends BaseWidget
             Stat::make('Material', Material::count())
             ->description('Material tersedia')
             ->descriptionIcon('heroicon-o-folder', IconPosition::Before)
-            ->color('success'),
+            ->color('primary'),
             Stat::make('Marketing', Admin::count())
             ->description('Marketing terdaftar')
             ->descriptionIcon('heroicon-m-user-group',IconPosition::Before)
-            ->color('success'),
+            ->color('primary'),
             Stat::make('Calon Pelanggan', Pelanggan::count())
             ->description('Calon pelanggan')
             ->descriptionIcon('heroicon-o-users',IconPosition::Before)
-            ->color('success')
+            ->color('primary')
         ];
     }
 }
+ 

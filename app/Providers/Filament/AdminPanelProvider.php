@@ -19,19 +19,19 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Navigation\MenuItem;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {   
     public function panel(Panel $panel): Panel
     {
         return $panel
-            // ->profile(isSimple: false)
+            ->profile(isSimple: false)
             ->id('admin')
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => color::Emerald,
+                'primary' => color::Blue,
                 // 'danger' => Color::Rose,
                 // 'gray' => Color::Gray,
                 // 'info' => Color::Blue,
@@ -39,14 +39,13 @@ class AdminPanelProvider extends PanelProvider
                 // 'success' => Color::Emerald,
                 // 'warning' => Color::Orange,
             ])
-            // ->brandName('PT Sugi Harti Indonesia')
+            // ->brandName('PT Sugi Harti Indonesia'
             ->userMenuItems([
-                'logout' => MenuItem::make()->label('Log out')
             ])
             ->userMenuItems([
-                MenuItem::make()
-                    ->label('Settings')
-                    ->icon('heroicon-o-cog-6-tooth')
+                // MenuItem::make()
+                //     ->label('Settings')
+                //     ->icon('heroicon-o-cog-6-tooth')
                     // ->url(fn (): string => EditProfile::getUrl())
             ])
             ->favicon(asset('assets/logo.png'))
@@ -82,6 +81,23 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ;
+            ->plugins([
+                // FilamentEditProfilePlugin::make()
+                // ->slug('my-profile')
+                // ->setTitle('My Profile')
+                // ->setNavigationLabel('My Profile')
+                // ->setNavigationGroup('Group Profile')
+                // ->setIcon('heroicon-o-user')
+                // ->setSort(10)
+                // ->canAccess(fn () => auth()->user()->id === 1)
+                // ->shouldRegisterNavigation(false)
+                // ->shouldShowDeleteAccountForm(false)
+                // ->shouldShowSanctumTokens()
+                // ->shouldShowBrowserSessionsForm()
+                // ->shouldShowAvatarForm()
+                // ->customProfileComponents([
+                //     \App\Livewire\CustomProfileComponent::class,
+                // ])
+            ]);
     }
 }

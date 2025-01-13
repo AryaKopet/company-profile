@@ -15,7 +15,7 @@ class Pesanan extends BaseWidget
             Stat::make('Pesanan', ModelsPesanan::count())
             ->description('Pesanan Terverifikasi')
             ->descriptionIcon('heroicon-m-shopping-bag', IconPosition::Before)
-            ->color('success')
+            ->color('primary')
             ->chart([1,3,5,10,20,40])
         ];
     }
