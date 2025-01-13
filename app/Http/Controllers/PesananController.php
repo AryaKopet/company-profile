@@ -3,79 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pesanan; // Pastikan model sesuai
-use App\Models\Material; // Model untuk tabel material
+use App\Models\Material;
 
 class PesananController extends Controller
 {
-    public function calculate(Request $request)
+    public function generateStruk(Request $request)
     {
-        // Ambil data inputan
-        $inputPanjang = $request->panjang;
-        $inputLebar = $request->lebar;
-        $inputTinggi = $request->tinggi;
-        $materialId = $request->material_id;
-        $frameId = $request->frame_id;
+        // Data pelanggan dari Form 1
+        $customer = [
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'no_telepon' => $request->no_telepon,
+            'lokasi' => $request->lokasi,
+        ];
 
-        // Data fix dari perusahaan
-        $panjangMaterial = 3000; // mm
-        $lebarMaterial = 2000; // mm
-        $sparePond = 10; // mm
-        $kupingan = 40; // mm
+        // Data customisasi dari Form 2
+        $customization = [
+            'material_id' => $request->material_id,
+            'frame_id' => $request->frame_id,
+            'panjang' => $request->panjang,
+            'lebar' => $request->lebar,
+            'tinggi' => $request->tinggi,
+        ];
 
         // Ambil data material dan frame
-        $material = Material::find($materialId);
-        $frame = Material::find($frameId);
+        $material = Material::find($customization['material_id']);
+        $frame = Material::find($customization['frame_id']);
 
-        // Step 1: Hitung body
-        $panjangBody = $inputTinggi + $inputLebar + $inputTinggi + $sparePond;
+        // Rumus perhitungan harga
+        $sparePond = 10;
+        $kupingan = 40;
+        $panjangMaterial = 3000;
+        $lebarMaterial = 2000;
+
+        // Perhitungan body
+        $panjangBody = $customization['tinggi'] + $customization['lebar'] + $customization['tinggi'] + $sparePond;
         $lebarBody = ($panjangBody - 10) + $sparePond;
-
-        // Step 2: Hitung pintu
-        $panjangPintu = $inputTinggi + $kupingan + $sparePond;
-        $lebarPintu = $kupingan + $inputLebar + $kupingan + $sparePond;
-
-        // Step 3: Hitung lembaran body
-        $panjangLembaranBody = $panjangMaterial / $panjangBody;
-        $lebarLembaranBody = $lebarMaterial / $lebarBody;
-        $lembaranBody = $panjangLembaranBody * $lebarLembaranBody;
-
-        // Step 4: Hitung lembaran pintu
-        $panjangLembaranPintu = $panjangMaterial / $panjangPintu;
-        $lebarLembaranPintu = $lebarMaterial / $lebarPintu;
-        $lembaranPintu = $panjangLembaranPintu * $lebarLembaranPintu;
-
-        // Step 5: Harga material
+        $lembaranBody = ($panjangMaterial / $panjangBody) * ($lebarMaterial / $lebarBody);
         $hargaBody = $material->harga / $lembaranBody;
+
+        // Perhitungan pintu
+        $panjangPintu = $customization['tinggi'] + $kupingan + $sparePond;
+        $lebarPintu = $kupingan + $customization['lebar'] + $kupingan + $sparePond;
+        $lembaranPintu = ($panjangMaterial / $panjangPintu) * ($lebarMaterial / $lebarPintu);
         $hargaPintu = $material->harga / $lembaranPintu;
+
+        // Harga total material dan frame
         $hargaBox = $hargaBody + $hargaPintu;
+        $totalHargaFrame = ($frame->harga / ($panjangMaterial / $customization['panjang'])) * 2 +
+                           ($frame->harga / ($lebarMaterial / $customization['lebar'])) * 2;
 
-        // Tahap 2: Hitung harga frame
-        $panjangFrame = $panjangMaterial / $inputPanjang;
-        $totalPanjangFrame = $frame->harga / $panjangFrame;
+        // Total harga akhir
+        $hargaTotal = $hargaBox + $totalHargaFrame;
 
-        $lebarFrame = $lebarMaterial / $inputLebar;
-        $totalLebarFrame = $frame->harga / $lebarFrame;
+        // Data untuk struk
+        $strukData = [
+            'customer' => $customer,
+            'customization' => $customization,
+            'total_harga' => $hargaTotal,
+        ];
 
-        $totalHargaFrame = ($totalPanjangFrame * 2) + ($totalLebarFrame * 2);
-
-        // Tahap 3: Hitung biaya total
-        $hargaTotalMaterial = $hargaBox + $totalHargaFrame;
-
-        // Biaya tambahan
-        $hargaProcess = $material->harga_process ?? 0;
-        $hargaDieCut = $material->harga_die_cut ?? 0;
-        $hargaTransport = $material->harga_transport ?? 0;
-        $profit = $hargaTotalMaterial * 0.3;
-
-        // Total harga produksi
-        $totalHargaProduksi = $hargaTotalMaterial + $hargaProcess + $hargaDieCut + $hargaTransport + $profit;
-
-        // Return hasil
-        return response()->json([
-            'harga_box' => $hargaBox,
-            'harga_frame' => $totalHargaFrame,
-            'total_harga_produksi' => $totalHargaProduksi,
-        ]);
+        // Arahkan ke halaman struk dengan data
+        return view('struk', compact('strukData'));
     }
 }
