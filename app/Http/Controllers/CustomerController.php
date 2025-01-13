@@ -18,22 +18,16 @@ class CustomerController extends Controller
     // Menangani form Step 1
     public function submitStep1(Request $request)
     {
-        // Validasi input dengan custom message
+        // Validasi input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:pelanggan,email',
             'phone' => 'required|string|max:20',
             'location' => 'required|in:jabodetabek,luar',
-        ], [
-            'email.unique' => 'Email sudah digunakan, harap coba lagi.',
-            'email.required' => 'Email wajib diisi.',
-            'name.required' => 'Nama wajib diisi.',
-            'phone.required' => 'Nomor telepon wajib diisi.',
-            'location.required' => 'Lokasi wajib dipilih.',
         ]);
 
-        // Simpan data pelanggan ke database
-        $pelanggan = Pelanggan::create([
+        // Simpan data pelanggan
+        Pelanggan::create([
             'nama' => $validated['name'],
             'email' => $validated['email'],
             'no_telepon' => $validated['phone'],
@@ -41,12 +35,11 @@ class CustomerController extends Controller
         ]);
 
         // Simpan email ke session
-        $request->session()->put('email', $request->email);
-        
-        // Redirect ke Step 2
+        $request->session()->put('email', $validated['email']);
+
         return redirect()->route('customize.box.step2');
     }
-    
+
     // Menampilkan Step 2
     public function showStep2(Request $request)
     {
@@ -55,42 +48,43 @@ class CustomerController extends Controller
         $email = $request->session()->get('email');
 
         if (!$email) {
-            return redirect()->route('customize.box.step1')->withErrors('Silakan lengkapi Step sebelumnya terlebih dahulu.');
+            return redirect()->route('customize.box.step1')->withErrors('Silakan lengkapi Step 1 terlebih dahulu.');
         }
 
-        return view('customize-box-step2', compact('email','materials', 'frames'));
+        return view('customize-box-step2', compact('email', 'materials', 'frames'));
     }
-    
+
     // Menangani form Step 2
     public function submitStep2(Request $request)
-    {   
+    {
+        // Validasi input
         $validated = $request->validate([
-            'email' => 'required|email|exists:pelanggan,email', // Validasi email terdaftar di tabel pelanggan
-            'material_id' => 'required',
-            'frame' => 'required',
-            'panjang' => 'required|integer|min:1', // Validasi panjang tidak boleh 0 atau negatif
-            'lebar' => 'required|integer|min:1', // Validasi lebar tidak boleh 0 atau negatif
-            'tinggi' => 'required|integer|min:1', // Validasi tinggi tidak boleh 0 atau negatif
-        ], [
-            'email.exists' => 'Email tidak dapat ditemukan. Silakan lengkapi data pada step sebelumnya.',
-            'material_id.exists' => 'Material tidak valid.',
-            'frame_id.exists' => 'Frame tidak valid.',
-            'panjang.min' => 'Panjang harus lebih besar dari 0.',
-            'lebar.min' => 'Lebar harus lebih besar dari 0.',
-            'tinggi.min' => 'Tinggi harus lebih besar dari 0.',
+            'email' => 'required|email|exists:pelanggan,email',
+            'material_id' => 'required|exists:materials,id_material',
+            'frame' => 'required|exists:materials,id_material',
+            'panjang' => 'required|integer|min:1',
+            'lebar' => 'required|integer|min:1',
+            'tinggi' => 'required|integer|min:1',
         ]);
-        
-        // Simpan data pesanan ke tabel pesanan
+
+        // Simpan data pesanan
         Pesanan::create([
-            'email' => $request->email,
+            'email' => $validated['email'],
             'bahan_material' => Material::find($validated['material_id'])->barang,
             'frame' => Material::find($validated['frame'])->barang,
             'panjang' => $validated['panjang'],
             'lebar' => $validated['lebar'],
             'tinggi' => $validated['tinggi'],
         ]);
-    
-        return redirect('/')->with('success', 'Pesanan berhasil disimpan!');
-    }
 
+        // Redirect ke PesananController untuk menghitung dan menampilkan struk
+        return redirect()->route('generate.struk', [
+            'email' => $validated['email'],
+            'material_id' => $validated['material_id'],
+            'frame_id' => $validated['frame'],
+            'panjang' => $validated['panjang'],
+            'lebar' => $validated['lebar'],
+            'tinggi' => $validated['tinggi'],
+        ]);
+    }
 }

@@ -24,7 +24,7 @@
     <ul>
         <li>Material: {{ $strukData['customization']['material_id'] }}</li>
         <li>Frame: {{ $strukData['customization']['frame_id'] }}</li>
-        <li>Ukuran: {{ $strukData['customization']['panjang'] }} x {{ $strukData['customization']['lebar'] }} x {{ $strukData['customization']['tinggi'] }}</li>
+        <li>Ukuran: panjang {{ $strukData['customization']['panjang'] }}mm x lebar {{ $strukData['customization']['lebar'] }}mm x tinggi {{ $strukData['customization']['tinggi'] }}mm</li>
     </ul>
 
     <h2>Total Harga</h2>
