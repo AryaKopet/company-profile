@@ -1,4 +1,3 @@
 body {
-    background: rgb(var(--primary-900));
     background: url("assets/bg-login.png") center / cover, linear-gradient(0deg, rgba(var(--primary-900),1) 0%, rgba(var(--primary-500)) 100%);
 }
