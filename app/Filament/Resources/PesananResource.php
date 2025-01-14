@@ -62,9 +62,9 @@ class PesananResource extends Resource
                 Tables\Columns\TextColumn::make('email')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('bahan_material')->label('Bahan Material'),
                 Tables\Columns\TextColumn::make('frame')->label('Frame'),
-                Tables\Columns\TextColumn::make('panjang')->label('Panjang (cm)'),
-                Tables\Columns\TextColumn::make('lebar')->label('Lebar (cm)'),
-                Tables\Columns\TextColumn::make('tinggi')->label('Tinggi (cm)'),
+                Tables\Columns\TextColumn::make('panjang')->label('Panjang (mm)'),
+                Tables\Columns\TextColumn::make('lebar')->label('Lebar (mm)'),
+                Tables\Columns\TextColumn::make('tinggi')->label('Tinggi (mm)'),
                 Tables\Columns\TextColumn::make('created_at')->label('Dibuat Pada')->dateTime('d M Y H:i'),
             ])
             ->filters([
