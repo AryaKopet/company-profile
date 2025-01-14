@@ -9,73 +9,83 @@ use App\Models\Pelanggan;
 class PesananController extends Controller
 {
     public function generateStruk(Request $request)
-{
-    // Data pelanggan
-    $customer = [
-        'nama' => Pelanggan::where('email', $request->email)->value('nama'),
-        'email' => $request->email,
-        'no_telepon' => Pelanggan::where('email', $request->email)->value('no_telepon'),
-        'lokasi' => Pelanggan::where('email', $request->email)->value('lokasi'),
-    ];
+    {
+        // Data pelanggan
+        $customer = [
+            'nama' => Pelanggan::where('email', $request->email)->value('nama'),
+            'email' => $request->email,
+            'no_telepon' => Pelanggan::where('email', $request->email)->value('no_telepon'),
+            'lokasi' => Pelanggan::where('email', $request->email)->value('lokasi'),
+        ];
 
-    // Data customisasi
-    $customization = $request->only(['material_id', 'frame_id', 'panjang', 'lebar', 'tinggi']);
-    $material = Material::find($customization['material_id']);
-    $frame = Material::find($customization['frame_id']);
+        // Data customisasi
+        $customization = $request->only(['material_id', 'frame_id', 'panjang', 'lebar', 'tinggi']);
+        $material = Material::find($customization['material_id']);
+        $frame = Material::find($customization['frame_id']);
 
-    // Konstanta
-    $sparePond = 10;
-    $kupingan = 40;
-    $panjangMaterial = 3000;
-    $lebarMaterial = 2000;
+        // Konstanta
+        $sparePond = 10;
+        $kupingan = 40;
+        $panjangMaterial = 3000;
+        $lebarMaterial = 2000;
 
-    // Perhitungan body dan pintu
-    $panjangBody = $customization['tinggi'] + $customization['lebar'] + $customization['tinggi'] + $sparePond;
-    $lebarBody = ($panjangBody - 10) + $sparePond;
-    $lembaranBody = ($panjangMaterial / $panjangBody) * ($lebarMaterial / $lebarBody);
-    $hargaBody = $material->harga / $lembaranBody;
+        // Fungsi pembulatan khusus
+        $customRound = function ($value) {
+            return ($value - floor($value) >= 0.5) ? ceil($value) : floor($value);
+        };
 
-    $panjangPintu = $customization['tinggi'] + $kupingan + $sparePond;
-    $lebarPintu = $kupingan + $customization['lebar'] + $kupingan + $sparePond;
-    $lembaranPintu = ($panjangMaterial / $panjangPintu) * ($lebarMaterial / $lebarPintu);
-    $hargaPintu = $material->harga / $lembaranPintu;
+        // Perhitungan body dan pintu
+        $panjangBody = $customization['tinggi'] + $customization['lebar'] + $customization['tinggi'] + $sparePond;
+        $lebarBody = ($panjangBody - 10) + $sparePond;
 
-    // Harga box
-    $hargaBox = $hargaBody + $hargaPintu;
+        $panjangPintu = $customization['tinggi'] + $kupingan + $sparePond;
+        $lebarPintu = $kupingan + $customization['lebar'] + $kupingan + $sparePond;
 
-    // Perhitungan frame
-    $totalHargaFrame = (($frame->harga / ($panjangMaterial / $customization['panjang'])) * 2) +
-                       (($frame->harga / ($lebarMaterial / $customization['lebar'])) * 2);
+        $lembaranBody = ($panjangMaterial / $panjangBody) * ($lebarMaterial / $lebarBody);
+        $hargaBody = $material->harga / $customRound($lembaranBody);
 
-    // Komponen tambahan
-    $cornerHarga = 1000; // Harga corner, bisa ambil dari tabel
-    $handleHarga = 1850;
-    $kanbanHarga = 3200;
-    $screwHarga = 125;
-    $mataItikHarga = 125;
-    $printingHarga = 1500;
+        $lembaranPintu = ($panjangMaterial / $panjangPintu) * ($lebarMaterial / $lebarPintu);
+        $hargaPintu = $material->harga / $customRound($lembaranPintu);
 
-    $processHarga = 30000;
-    $dieCutHarga = 5000;
-    $transportHarga = 1000;
+        $hargaBox = $hargaBody + $hargaPintu;
 
-    $hargaTotalMaterial = $hargaBox + $totalHargaFrame + (4 * $cornerHarga) + (2 * $handleHarga) +
-                          (2 * $kanbanHarga) + (16 * $screwHarga) + (16 * $mataItikHarga) +
-                            $printingHarga;
+        // Perhitungan frame
+        $totalPanjangFrame = $customization['panjang'] * 2;
+        $totalLebarFrame = $customization['lebar'] * 2;
+        $HargaFrame = ($totalPanjangFrame + $totalLebarFrame) * $frame->harga / $panjangMaterial;
 
-    $hargaJasa = $processHarga + $dieCutHarga + $transportHarga;
-    $profit = $hargaTotalMaterial * 0.3;
+        // Ambil harga komponen tambahan dari database
+        $cornerHarga = Material::where('barang', 'corner')->value('harga');
+        $handleHarga = Material::where('barang', 'handle')->value('harga');
+        $kanbanHarga = Material::where('barang', 'kanban')->value('harga');
+        $screwHarga = Material::where('barang', 'screw')->value('harga');
+        $mataItikHarga = Material::where('barang', 'mata itik')->value('harga');
+        $printingHarga = Material::where('barang', 'printing')->value('harga');
+        $processHarga = Material::where('barang', 'process')->value('harga');
+        $dieCutHarga = Material::where('barang', 'die cut')->value('harga');
+        $transportHarga = Material::where('barang', 'transport jabodetabek')->value('harga');
 
-    $totalHargaProduksi = $hargaTotalMaterial + $hargaJasa + $profit;
+        // Total harga material
+        $hargaTotalMaterial = $hargaBox + $HargaFrame + 
+                              (4 * $cornerHarga) + (2 * $handleHarga) +
+                              (2 * $kanbanHarga) + (16 * $screwHarga) +
+                              (16 * $mataItikHarga) + $printingHarga;
 
-    // Data untuk struk
-    $strukData = [
-        'customer' => $customer,
-        'customization' => $customization,
-        'total_harga' => $totalHargaProduksi,
-    ];
+        // Harga jasa
+        $hargaJasa = $processHarga + $dieCutHarga + $transportHarga;
+        $profit = $hargaTotalMaterial * 0.3;
+        $hargaTotalJasa = $hargaJasa + $profit;
 
-    return view('struk', compact('strukData'));
-}
+        // Total harga produksi
+        $totalHargaProduksi = $hargaTotalMaterial + $hargaTotalJasa;
 
+        // Data untuk struk
+        $strukData = [
+            'customer' => $customer,
+            'customization' => $customization,
+            'total_harga' => round($totalHargaProduksi, 0), // Pembulatan akhir
+        ];
+
+        return view('struk', compact('strukData'));
+    }
 }
