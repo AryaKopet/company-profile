@@ -23,6 +23,9 @@ class PesananController extends Controller
         $material = Material::find($customization['material_id']);
         $frame = Material::find($customization['frame_id']);
 
+        $customization['material_name'] = $material->barang ?? 'Material tidak ditemukan';
+        $customization['frame_name'] = $frame->barang ?? 'Frame tidak ditemukan';
+
         // Konstanta
         $sparePond = 10;
         $kupingan = 40;
@@ -88,4 +91,17 @@ class PesananController extends Controller
 
         return view('struk', compact('strukData'));
     }
+    public function cetakStruk($id)
+    {
+        $customer = Pelanggan::where('email', $id)->first();
+        // Ambil data terkait lainnya untuk struk
+        $strukData = [
+            'customer' => $customer,
+            // Tambahkan data lain sesuai kebutuhan
+        ];
+
+        $pdf = \PDF::loadView('struk', compact('strukData'));
+        return $pdf->download('struk_pemesanan.pdf');
+    }
+
 }

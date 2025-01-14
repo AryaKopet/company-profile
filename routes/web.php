@@ -19,6 +19,8 @@ Route::get('/customize-box-step2', [CustomerController::class, 'showStep2'])->na
 Route::post('/custom-box/2', [CustomerController::class, 'submitStep2'])->name('customize.storeStep2');
 Route::get('/generate-struk', [PesananController::class, 'generateStruk'])->name('generate.struk');
 Route::get('/admin/dashboard', [Dashboard::class, 'render'])->name('filament.pages.dashboard');
+Route::get('/cetak-struk/{id}', [PesananController::class, 'cetakStruk'])->name('cetak.struk');
+
 
 // Route::get('/custom-box', [CustomerController::class, 'showStep1'])->name('customize.box.step1');
 // Route::post('/customize-box/step1', [CustomerController::class, 'submitStep1'])->name('customize.box.step1.submit');
