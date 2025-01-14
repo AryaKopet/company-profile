@@ -218,9 +218,9 @@
             const tinggi = parseInt(document.getElementById('tinggi').value) || 0;
 
             const cube = document.getElementById('cube');
-            const scaleX = panjang / 100; // Skala panjang
-            const scaleY = tinggi / 100; // Skala tinggi
-            const scaleZ = lebar / 100; // Skala lebar
+            const scaleX = panjang / 1000; // Skala panjang
+            const scaleY = tinggi / 1000; // Skala tinggi
+            const scaleZ = lebar / 1000; // Skala lebar
 
             // Update skala dan rotasi kubus
             cube.style.transform = `rotateX(-20deg) rotateY(30deg)`;
