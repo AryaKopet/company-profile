@@ -83,7 +83,7 @@
             <p>Jl. M.Hasibuan - Bekasi Selatan 17141</p>
         </div>
         <div class="date">
-            <p>Tanggal Pemesanan: {{ now()->format('d-m-Y') }}</p>
+            <p>Tanggal: {{ now()->format('d-m-Y') }}</p>
         </div>
         <div class="content">
             <p>Kepada Yth,</p>
@@ -100,8 +100,8 @@
 
             <h2 class="section-title">Data Customisasi Box</h2>
             <ul>
-                <li>Material: {{ $strukData['customization']['material_name'] }}</li>
-                <li>Frame: {{ $strukData['customization']['frame_name'] }}</li>
+                <li>Material: {{ $strukData['customization']['material_name'] ?? 'Tidak tersedia' }}</li>
+                <li>Frame: {{ $strukData['customization']['frame_name'] ?? 'Tidak tersedia' }}</li>
                 <li>Ukuran: Panjang {{ $strukData['customization']['panjang'] }}mm x Lebar {{ $strukData['customization']['lebar'] }}mm x Tinggi {{ $strukData['customization']['tinggi'] }}mm</li>
             </ul>
 

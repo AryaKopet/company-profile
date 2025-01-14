@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -11,18 +10,27 @@ class PesananController extends Controller
 {
     public function generateStruk(Request $request)
     {
-        // Data pelanggan
+        // Ambil data pelanggan
+        $pelanggan = Pelanggan::where('email', $request->email)->first();
+        if (!$pelanggan) {
+            return back()->withErrors(['error' => 'Pelanggan tidak ditemukan.']);
+        }
+
         $customer = [
-            'nama' => Pelanggan::where('email', $request->email)->value('nama'),
-            'email' => $request->email,
-            'no_telepon' => Pelanggan::where('email', $request->email)->value('no_telepon'),
-            'lokasi' => Pelanggan::where('email', $request->email)->value('lokasi'),
+            'nama' => $pelanggan->nama,
+            'email' => $pelanggan->email,
+            'no_telepon' => $pelanggan->no_telepon,
+            'lokasi' => $pelanggan->lokasi,
         ];
 
-        // Data customisasi
+        // Ambil data customisasi
         $customization = $request->only(['material_id', 'frame_id', 'panjang', 'lebar', 'tinggi']);
         $material = Material::find($customization['material_id']);
         $frame = Material::find($customization['frame_id']);
+
+        if (!$material || !$frame) {
+            return back()->withErrors(['error' => 'Material atau frame tidak ditemukan.']);
+        }
 
         $customization['material_name'] = $material->barang ?? 'Material tidak ditemukan';
         $customization['frame_name'] = $frame->barang ?? 'Frame tidak ditemukan';
@@ -56,27 +64,29 @@ class PesananController extends Controller
         // Perhitungan frame
         $totalPanjangFrame = $customization['panjang'] * 2;
         $totalLebarFrame = $customization['lebar'] * 2;
-        $HargaFrame = ($totalPanjangFrame + $totalLebarFrame) * $frame->harga / $panjangMaterial;
+        $hargaFrame = ($totalPanjangFrame + $totalLebarFrame) * $frame->harga / $panjangMaterial;
 
-        // Ambil harga komponen tambahan dari database
-        $cornerHarga = Material::where('barang', 'corner')->value('harga');
-        $handleHarga = Material::where('barang', 'handle')->value('harga');
-        $kanbanHarga = Material::where('barang', 'kanban')->value('harga');
-        $screwHarga = Material::where('barang', 'screw')->value('harga');
-        $mataItikHarga = Material::where('barang', 'mata itik')->value('harga');
-        $printingHarga = Material::where('barang', 'printing')->value('harga');
-        $processHarga = Material::where('barang', 'process')->value('harga');
-        $dieCutHarga = Material::where('barang', 'die cut')->value('harga');
-        $transportHarga = Material::where('barang', 'transport jabodetabek')->value('harga');
+        // Harga komponen tambahan
+        $components = [
+            'corner' => Material::where('barang', 'corner')->value('harga'),
+            'handle' => Material::where('barang', 'handle')->value('harga'),
+            'kanban' => Material::where('barang', 'kanban')->value('harga'),
+            'screw' => Material::where('barang', 'screw')->value('harga'),
+            'mata_itik' => Material::where('barang', 'mata itik')->value('harga'),
+            'printing' => Material::where('barang', 'printing')->value('harga'),
+            'process' => Material::where('barang', 'process')->value('harga'),
+            'die_cut' => Material::where('barang', 'die cut')->value('harga'),
+            'transport' => Material::where('barang', 'transport jabodetabek')->value('harga'),
+        ];
 
         // Total harga material
-        $hargaTotalMaterial = $hargaBox + $HargaFrame + 
-                              (4 * $cornerHarga) + (2 * $handleHarga) +
-                              (2 * $kanbanHarga) + (16 * $screwHarga) +
-                              (16 * $mataItikHarga) + $printingHarga;
+        $hargaTotalMaterial = $hargaBox + $hargaFrame + 
+                              (4 * $components['corner']) + (2 * $components['handle']) +
+                              (2 * $components['kanban']) + (16 * $components['screw']) +
+                              (16 * $components['mata_itik']) + $components['printing'];
 
         // Harga jasa
-        $hargaJasa = $processHarga + $dieCutHarga + $transportHarga;
+        $hargaJasa = $components['process'] + $components['die_cut'] + $components['transport'];
         $profit = $hargaTotalMaterial * 0.3;
         $hargaTotalJasa = $hargaJasa + $profit;
 
@@ -87,22 +97,37 @@ class PesananController extends Controller
         $strukData = [
             'customer' => $customer,
             'customization' => $customization,
-            'total_harga' => round($totalHargaProduksi, 0), // Pembulatan akhir
+            'total_harga' => round($totalHargaProduksi, 0),
         ];
 
         return view('struk', compact('strukData'));
     }
+
     public function cetakStruk($id)
     {
         $customer = Pelanggan::where('email', $id)->first();
-        // Ambil data terkait lainnya untuk struk
+        if (!$customer) {
+            return back()->withErrors(['error' => 'Data pelanggan tidak ditemukan.']);
+        }
+
         $strukData = [
-            'customer' => $customer,
-            // Tambahkan data lain sesuai kebutuhan
+            'customer' => [
+                'nama' => $customer->nama,
+                'email' => $customer->email,
+                'no_telepon' => $customer->no_telepon,
+                'lokasi' => $customer->lokasi,
+            ],
+            'customization' => [
+                'material_name' => 'N/A',
+                'frame_name' => 'N/A',
+                'panjang' => 'N/A',
+                'lebar' => 'N/A',
+                'tinggi' => 'N/A',
+            ],
+            'total_harga' => 0,
         ];
 
         $pdf = PDF::loadView('struk', compact('strukData'));
         return $pdf->download('struk_pemesanan.pdf');
     }
-
 }
