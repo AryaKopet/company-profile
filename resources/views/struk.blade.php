@@ -110,7 +110,7 @@
             <p>Jika ada pertanyaan lebih lanjut, hubungi kami melalui email <a href="mailto:admin@pt-shi.com">admin@pt-shi.com</a>.</p>
         </div>
         <div class="buttons">
-            <a href="{{ url('/') }}" class="btn btn-secondary">Selesai</a>
+            <a href="{{ url('/') }}" class="btn btn-secondary me-2 px-4 py-2">Selesai</a>
             <a href="{{ route('cetak.struk', ['id' => $strukData['customer']['email']]) }}" class="btn btn-primary">Cetak Struk</a>
         </div>
     </div>
