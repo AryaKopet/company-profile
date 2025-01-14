@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Times New Roman", Times, serif;
             background-color: #f7f9fc;
             margin: 0;
             padding: 0;
@@ -31,13 +31,19 @@
             max-width: 120px;
         }
         .header h1 {
-            font-size: 24px;
+            font-size: 26px;
             margin: 10px 0;
             font-weight: bold;
         }
         .header p {
             font-size: 14px;
-            color: #777;
+            color: #555;
+        }
+        .date {
+            text-align: right;
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #555;
         }
         .section-title {
             font-size: 18px;
@@ -73,8 +79,11 @@
     <div class="container">
         <div class="header">
             <img src="{{ asset('assets/logo.png') }}" alt="Logo">
-            <h1>PT. SHI</h1>
-            <p>Jl. Contoh Alamat No. 123, Jakarta, Indonesia</p>
+            <h1>PT. Sugi Harti Indonesia</h1>
+            <p>Jl. M.Hasibuan - Bekasi Selatan 17141</p>
+        </div>
+        <div class="date">
+            <p>Tanggal Pemesanan: {{ now()->format('d-m-Y') }}</p>
         </div>
         <div class="content">
             <p>Kepada Yth,</p>
@@ -91,8 +100,8 @@
 
             <h2 class="section-title">Data Customisasi Box</h2>
             <ul>
-            <li>Material: {{ $strukData['customization']['material_name'] }}</li>
-            <li>Frame: {{ $strukData['customization']['frame_name'] }}</li>
+                <li>Material: {{ $strukData['customization']['material_name'] }}</li>
+                <li>Frame: {{ $strukData['customization']['frame_name'] }}</li>
                 <li>Ukuran: Panjang {{ $strukData['customization']['panjang'] }}mm x Lebar {{ $strukData['customization']['lebar'] }}mm x Tinggi {{ $strukData['customization']['tinggi'] }}mm</li>
             </ul>
 

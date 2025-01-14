@@ -137,4 +137,8 @@ return [
         'brand' => env('APP_NAME', 'PT. Sugi Harti Indonesia'),
     ],
 
+    'aliases' => [
+    // Alias lainnya...
+    'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+],
 ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Material;
 use App\Models\Pelanggan;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PesananController extends Controller
 {
@@ -100,7 +101,7 @@ class PesananController extends Controller
             // Tambahkan data lain sesuai kebutuhan
         ];
 
-        $pdf = \PDF::loadView('struk', compact('strukData'));
+        $pdf = PDF::loadView('struk', compact('strukData'));
         return $pdf->download('struk_pemesanan.pdf');
     }
 
