@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Widgets\AppWidget;
 use App\Filament\Widgets\Pesanan;
 use Filament\Http\Middleware\Authenticate;
@@ -19,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\MenuItem;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -40,12 +40,10 @@ class AdminPanelProvider extends PanelProvider
                 // 'warning' => Color::Orange,
             ])
             ->userMenuItems([
-            ])
-            ->userMenuItems([
-                // MenuItem::make()
-                //     ->label('Settings')
-                //     ->icon('heroicon-o-cog-6-tooth')
-                    // ->url(fn (): string => EditProfile::getUrl())
+                'profile' => MenuItem::make()
+                ->label(fn() => auth()->user()->name)
+                ->icon('heroicon-m-user-circle')
+                //If you are using tenancy need to check with the visible method where ->company() is the relation between the user and tenancy model as you called
             ])
             ->favicon(asset('assets/logo.png'))
             // ->brandLogo(asset('assets/logo.png'))
@@ -79,24 +77,9 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->viteTheme('resources/css/filament/admin/theme.css')
-            ->plugins([
-                // FilamentEditProfilePlugin::make()
-                // ->slug('my-profile')
-                // ->setTitle('My Profile')
-                // ->setNavigationLabel('My Profile')
-                // ->setNavigationGroup('Group Profile')
-                // ->setIcon('heroicon-o-user')
-                // ->setSort(10)
-                // ->canAccess(fn () => auth()->user()->id === 1)
-                // ->shouldRegisterNavigation(false)
-                // ->shouldShowDeleteAccountForm(false)
-                // ->shouldShowSanctumTokens()
-                // ->shouldShowBrowserSessionsForm()
-                // ->shouldShowAvatarForm()
-                // ->customProfileComponents([
-                //     \App\Livewire\CustomProfileComponent::class,
-                // ])
-            ]);
+            ->viteTheme('resources/css/filament/admin/theme.css');
+            // ->plugins([
+            //     FilamentEditProfilePlugin::make()
+            // ]);
     }
 }

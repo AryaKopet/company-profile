@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string(config('filament-edit-profile.avatar_column', 'avatar_url'))->nullable();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */
