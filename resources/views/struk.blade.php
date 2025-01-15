@@ -12,7 +12,7 @@
         body {
             font-family: "Times New Roman", Times, serif;
             background-color: #f7f9fc;
-            margin: 0;
+            margin: 0 0 10px 0;
             padding: 0;
         }
         .container {
@@ -117,10 +117,10 @@
 
             <p>Jika ada pertanyaan lebih lanjut, hubungi kami melalui email <a href="mailto:admin@pt-shi.com">admin@pt-shi.com</a>.</p>
         </div>
-        <div class="buttons">
-            <a href="{{ url('/') }}" class="btn btn-secondary me-2 px-4 py-2">Selesai</a>
-            <a href="{{ route('cetak.struk', ['id' => $strukData['customer']['email']]) }}" class="btn btn-primary">Cetak Struk</a>
-        </div>
+    </div>
+    <div class="buttons">
+        <a href="{{ url('/') }}" class="btn btn-secondary me-2 px-4 py-2">Selesai</a>
+        <a href="{{ route('cetak.struk', ['id' => $strukData['customer']['email']]) }}" class="btn btn-primary">Cetak Struk</a>
     </div>
 
     <!-- Bootstrap JS -->
