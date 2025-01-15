@@ -67,24 +67,70 @@ class CustomerController extends Controller
             'tinggi' => 'required|integer|min:1',
         ]);
 
-        // Simpan data pesanan
+        // Ambil data material dan frame
+        $material = Material::find($validated['material_id']);
+        $frame = Material::find($validated['frame']);
+
+        // Hitung harga berdasarkan logika yang ada
+        $sparePond = 10;
+        $kupingan = 40;
+        $panjangMaterial = 3000;
+        $lebarMaterial = 2000;
+
+        $customRound = function ($value) {
+            return ($value - floor($value) >= 0.5) ? ceil($value) : floor($value);
+        };
+
+        $panjangBody = $validated['tinggi'] + $validated['lebar'] + $validated['tinggi'] + $sparePond;
+        $lebarBody = ($panjangBody - 10) + $sparePond;
+
+        $lembaranBody = ($panjangMaterial / $panjangBody) * ($lebarMaterial / $lebarBody);
+        $hargaBody = $material->harga / $customRound($lembaranBody);
+
+        $panjangPintu = $validated['tinggi'] + $kupingan + $sparePond;
+        $lebarPintu = $kupingan + $validated['lebar'] + $kupingan + $sparePond;
+
+        $lembaranPintu = ($panjangMaterial / $panjangPintu) * ($lebarMaterial / $lebarPintu);
+        $hargaPintu = $material->harga / $customRound($lembaranPintu);
+
+        $hargaBox = $hargaBody + $hargaPintu;
+
+        $totalPanjangFrame = $validated['panjang'] * 2;
+        $totalLebarFrame = $validated['lebar'] * 2;
+        $hargaFrame = ($totalPanjangFrame + $totalLebarFrame) * $frame->harga / $panjangMaterial;
+
+        $components = [
+            'corner' => Material::where('barang', 'corner')->value('harga'),
+            'handle' => Material::where('barang', 'handle')->value('harga'),
+            'kanban' => Material::where('barang', 'kanban')->value('harga'),
+            'screw' => Material::where('barang', 'screw')->value('harga'),
+            'mata_itik' => Material::where('barang', 'mata itik')->value('harga'),
+            'printing' => Material::where('barang', 'printing')->value('harga'),
+            'process' => Material::where('barang', 'process')->value('harga'),
+            'die_cut' => Material::where('barang', 'die cut')->value('harga'),
+            'transport' => Material::where('barang', 'transport jabodetabek')->value('harga'),
+        ];
+
+        $hargaTotalMaterial = $hargaBox + $hargaFrame +
+                            (4 * $components['corner']) + (2 * $components['handle']) +
+                            (2 * $components['kanban']) + (16 * $components['screw']) +
+                            (16 * $components['mata_itik']) + $components['printing'];
+
+        $hargaJasa = $components['process'] + $components['die_cut'] + $components['transport'];
+        $profit = $hargaTotalMaterial * 0.3;
+        $totalHargaProduksi = $hargaTotalMaterial + $hargaJasa + $profit;
+
+        // Simpan data pesanan beserta harga
         Pesanan::create([
             'email' => $validated['email'],
-            'bahan_material' => Material::find($validated['material_id'])->barang,
-            'frame' => Material::find($validated['frame'])->barang,
+            'bahan_material' => $material->barang,
+            'frame' => $frame->barang,
             'panjang' => $validated['panjang'],
             'lebar' => $validated['lebar'],
             'tinggi' => $validated['tinggi'],
+            'harga' => round($totalHargaProduksi, 0), // Simpan harga
         ]);
 
-        // Redirect ke PesananController untuk menghitung dan menampilkan struk
-        return redirect()->route('generate.struk', [
-            'email' => $validated['email'],
-            'material_id' => $validated['material_id'],
-            'frame_id' => $validated['frame'],
-            'panjang' => $validated['panjang'],
-            'lebar' => $validated['lebar'],
-            'tinggi' => $validated['tinggi'],
-        ]);
+        return redirect()->route('generate.struk', $validated);
     }
 }
