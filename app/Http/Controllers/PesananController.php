@@ -1,13 +1,23 @@
-<?php
+<?php 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Material;
 use App\Models\Pelanggan;
+use App\Models\Pesanan;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class PesananController extends Controller
 {
+    private function generateNomorStruk($id_pesanan)
+    {
+        $romawiBulan = [1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V', 6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X', 11 => 'XI', 12 => 'XII'];
+        $bulan = $romawiBulan[date('n')]; // Bulan sekarang dalam format Romawi
+        $tahun = date('Y'); // Tahun sekarang
+
+        return sprintf('%03d/PT-SHI/%s/%d', $id_pesanan, $bulan, $tahun);
+    }
+
     public function generateStruk(Request $request)
     {
         // Ambil data pelanggan
@@ -93,11 +103,26 @@ class PesananController extends Controller
         // Total harga produksi
         $totalHargaProduksi = $hargaTotalMaterial + $hargaTotalJasa;
 
+        // Simpan pesanan
+        $pesanan = Pesanan::create([
+            'email' => $customer['email'],
+            'bahan_material' => $material->barang,
+            'frame' => $frame->barang,
+            'panjang' => $customization['panjang'],
+            'lebar' => $customization['lebar'],
+            'tinggi' => $customization['tinggi'],
+            'harga' => round($totalHargaProduksi, 2),
+        ]);
+
+        // Generate nomor struk
+        $nomorStruk = $this->generateNomorStruk($pesanan->id_pesanan);
+
         // Data untuk struk
         $strukData = [
             'customer' => $customer,
             'customization' => $customization,
             'total_harga' => round($totalHargaProduksi, 0),
+            'nomor_struk' => $nomorStruk,
         ];
 
         return view('struk', compact('strukData'));
@@ -110,6 +135,16 @@ class PesananController extends Controller
             return back()->withErrors(['error' => 'Data pelanggan tidak ditemukan.']);
         }
 
+        // Ambil data pesanan yang sesuai dengan email pelanggan
+        $pesanan = Pesanan::where('email', $id)->latest()->first();
+        if (!$pesanan) {
+            return back()->withErrors(['error' => 'Pesanan tidak ditemukan.']);
+        }
+
+        // Generate nomor struk
+        $nomorStruk = $this->generateNomorStruk($pesanan->id_pesanan);
+
+        // Data untuk struk
         $strukData = [
             'customer' => [
                 'nama' => $customer->nama,
@@ -118,16 +153,18 @@ class PesananController extends Controller
                 'lokasi' => $customer->lokasi,
             ],
             'customization' => [
-                'material_name' => 'N/A',
-                'frame_name' => 'N/A',
-                'panjang' => 'N/A',
-                'lebar' => 'N/A',
-                'tinggi' => 'N/A',
+                'material_name' => $pesanan->bahan_material ?? 'N/A',
+                'frame_name' => $pesanan->frame ?? 'N/A',
+                'panjang' => $pesanan->panjang ?? 'N/A',
+                'lebar' => $pesanan->lebar ?? 'N/A',
+                'tinggi' => $pesanan->tinggi ?? 'N/A',
             ],
-            'total_harga' => 0,
+            'total_harga' => $pesanan->harga ?? 0,
+            'nomor_struk' => $nomorStruk, // Pastikan nomor struk sudah terisi
         ];
 
-        $pdf = PDF::loadView('struk', compact('strukData'));
+        $pdf = Pdf::loadView('struk', compact('strukData'));
         return $pdf->download('struk_pemesanan.pdf');
     }
+
 }

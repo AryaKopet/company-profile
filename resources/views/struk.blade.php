@@ -82,9 +82,11 @@
             <h1>PT. Sugi Harti Indonesia</h1>
             <p>Jl. M.Hasibuan - Bekasi Selatan 17141</p>
         </div>
+        <hr>
         <div class="date">
             <p>Tanggal: {{ now()->format('d-m-Y') }}</p>
         </div>
+        <p>Nomor Struk: {{ $strukData['nomor_struk'] }}</p>
         <div class="content">
             <p>Kepada Yth,</p>
             <p>Bapak/Ibu {{ $strukData['customer']['nama'] }}</p>
@@ -102,7 +104,13 @@
             <ul>
                 <li>Material: {{ $strukData['customization']['material_name'] ?? 'Tidak tersedia' }}</li>
                 <li>Frame: {{ $strukData['customization']['frame_name'] ?? 'Tidak tersedia' }}</li>
-                <li>Ukuran: Panjang {{ $strukData['customization']['panjang'] }}mm x Lebar {{ $strukData['customization']['lebar'] }}mm x Tinggi {{ $strukData['customization']['tinggi'] }}mm</li>
+                <li>Ukuran:
+                    <ul>
+                        <li>Panjang {{ $strukData['customization']['panjang'] }} mm</li>
+                        <li>Lebar {{ $strukData['customization']['lebar'] }} mm</li>
+                        <li>Tinggi {{ $strukData['customization']['tinggi'] }} mm</li>
+                    </ul>
+                </li>
             </ul>
 
             <h2 class="total">Total Harga: Rp {{ number_format($strukData['total_harga'], 0, ',', '.') }}</h2>
