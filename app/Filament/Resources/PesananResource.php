@@ -65,6 +65,7 @@ class PesananResource extends Resource
                 Tables\Columns\TextColumn::make('panjang')->label('Panjang (mm)'),
                 Tables\Columns\TextColumn::make('lebar')->label('Lebar (mm)'),
                 Tables\Columns\TextColumn::make('tinggi')->label('Tinggi (mm)'),
+                Tables\Columns\TextColumn::make('harga')->label('Harga'),
                 Tables\Columns\TextColumn::make('created_at')->label('Dibuat Pada')->dateTime('d M Y H:i'),
             ])
             ->filters([

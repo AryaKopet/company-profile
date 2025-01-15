@@ -128,9 +128,8 @@ class CustomerController extends Controller
             'panjang' => $validated['panjang'],
             'lebar' => $validated['lebar'],
             'tinggi' => $validated['tinggi'],
-            'harga' => round($totalHargaProduksi, 0), // Simpan harga
+            'harga' => round($totalHargaProduksi, 2), // Simpan harga
         ]);
-
         return redirect()->route('generate.struk', $validated);
     }
 }

@@ -19,6 +19,7 @@ class Pesanan extends Model
         'frame',
         'panjang',
         'lebar',
-        'tinggi'
+        'tinggi',
+        'harga'
     ];
 }

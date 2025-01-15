@@ -24,9 +24,9 @@ class PesananController extends Controller
         ];
 
         // Ambil data customisasi
-        $customization = $request->only(['material_id', 'frame_id', 'panjang', 'lebar', 'tinggi']);
+        $customization = $request->only(['material_id', 'frame', 'panjang', 'lebar', 'tinggi']);
         $material = Material::find($customization['material_id']);
-        $frame = Material::find($customization['frame_id']);
+        $frame = Material::find($customization['frame']);
 
         if (!$material || !$frame) {
             return back()->withErrors(['error' => 'Material atau frame tidak ditemukan.']);
