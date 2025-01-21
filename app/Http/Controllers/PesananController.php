@@ -155,18 +155,18 @@ class PesananController extends Controller
             ],
             'customization' => [
                 'nama_box' => $pesanan->nama_box,
-                'material_name' => $pesanan->bahan_material ?? 'N/A',
-                'frame_name' => $pesanan->frame ?? 'N/A',
-                'panjang' => $pesanan->panjang ?? 'N/A',
-                'lebar' => $pesanan->lebar ?? 'N/A',
-                'tinggi' => $pesanan->tinggi ?? 'N/A',
+                'material_name' => $pesanan->bahan_material,
+                'frame_name' => $pesanan->frame,
+                'panjang' => $pesanan->panjang,
+                'lebar' => $pesanan->lebar,
+                'tinggi' => $pesanan->tinggi,
             ],
-            'total_harga' => $pesanan->harga ?? 0,
-            'nomor_struk' => $nomorStruk, // Pastikan nomor struk sudah terisi
+            'total_harga' => $pesanan->harga,
+            'nomor_struk' => $nomorStruk,
         ];
 
-        $pdf = Pdf::loadView('struk', compact('strukData'));
-        return $pdf->download('struk_pemesanan.pdf');
+        // Generate PDF
+        $pdf = Pdf::loadView('struk-pdf', compact('strukData'));
+        return $pdf->download('surat_penawaran.pdf');
     }
-
 }

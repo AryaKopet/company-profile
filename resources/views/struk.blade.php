@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk Pemesanan</title>
+    <title>Surat Penawaran</title>
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('assets/logo.png') }}" type="image/png">
     <!-- Bootstrap CSS -->
@@ -115,8 +115,11 @@
             </ul>
 
             <h2 class="total">Total Harga: Rp {{ number_format($strukData['total_harga'], 0, ',', '.') }}</h2>
-            <p><strong>Note:</strong> Harap cetak struk ini untuk bukti pemesanan Anda.</p>
-            <p>Copy untuk arsip Anda tersedia melalui PDF.</p>
+            <br>
+            <small>
+                <p><strong>Note:</strong> Harga pada surat penawaran ini bisa berubah sewaktu-waktu, karena harga <br>pada surat penawaran ini belum merupakan harga final dari produksi box</p>
+                <p>Silahkan cetak surat penawaran ini sebagai copy anda melalui format pdf.</p>
+            </small>
         </div>
     </div>
     <div class="buttons">
