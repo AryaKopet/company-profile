@@ -23,7 +23,7 @@ class CustomerController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:pelanggan,email',
             'phone' => 'required|string|max:20',
-            'location' => 'required|in:jabodetabek,luar',
+            'location' => 'required|in:jabodetabek,luar (Jabodetabek)',
         ]);
 
         // Simpan data pelanggan
