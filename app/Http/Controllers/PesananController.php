@@ -34,7 +34,7 @@ class PesananController extends Controller
         ];
 
         // Ambil data customisasi
-        $customization = $request->only(['material_id', 'frame', 'panjang', 'lebar', 'tinggi']);
+        $customization = $request->only(['material_id','nama_box', 'frame', 'panjang', 'lebar', 'tinggi']);
         $material = Material::find($customization['material_id']);
         $frame = Material::find($customization['frame']);
 
@@ -107,6 +107,7 @@ class PesananController extends Controller
         $pesanan = Pesanan::create([
             'email' => $customer['email'],
             'bahan_material' => $material->barang,
+            'nama_box' => $customization['nama_box'],
             'frame' => $frame->barang,
             'panjang' => $customization['panjang'],
             'lebar' => $customization['lebar'],
@@ -153,6 +154,7 @@ class PesananController extends Controller
                 'lokasi' => $customer->lokasi,
             ],
             'customization' => [
+                'nama_box' => $pesanan->nama_box,
                 'material_name' => $pesanan->bahan_material ?? 'N/A',
                 'frame_name' => $pesanan->frame ?? 'N/A',
                 'panjang' => $pesanan->panjang ?? 'N/A',

@@ -15,6 +15,7 @@ class Pesanan extends Model
 
     protected $fillable = [
         'email',
+        'nama_box',
         'bahan_material',
         'frame',
         'panjang',

@@ -132,14 +132,6 @@ class CustomerController extends Controller
             'tinggi' => $validated['tinggi'],
             'harga' => round($totalHargaProduksi, 2), // Simpan harga
         ]);
-        return redirect()->route('generate.struk', [
-            'email' => $validated['email'],
-            'nama_box' => $validated['nama_box'],
-            'material_id' => $validated['material_id'],
-            'frame_id' => $validated['frame'],
-            'panjang' => $validated['panjang'],
-            'lebar' => $validated['lebar'],
-            'tinggi' => $validated['tinggi'],
-        ]);
+        return redirect()->route('generate.struk',$validated);
     }
 }
