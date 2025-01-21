@@ -102,6 +102,7 @@
 
             <h2 class="section-title">Data Customisasi Box</h2>
             <ul>
+                <li>Nama Projek/Box/Partisi: {{ $strukData['customization']['nama_box'] }}</li>
                 <li>Material: {{ $strukData['customization']['material_name'] ?? 'Tidak tersedia' }}</li>
                 <li>Frame: {{ $strukData['customization']['frame_name'] ?? 'Tidak tersedia' }}</li>
                 <li>Ukuran:
@@ -114,8 +115,8 @@
             </ul>
 
             <h2 class="total">Total Harga: Rp {{ number_format($strukData['total_harga'], 0, ',', '.') }}</h2>
-
-            <p>Jika ada pertanyaan lebih lanjut, hubungi kami melalui email <a href="mailto:admin@pt-shi.com">admin@pt-shi.com</a>.</p>
+            <p><strong>Note:</strong> Harap cetak struk ini untuk bukti pemesanan Anda.</p>
+            <p>Copy untuk arsip Anda tersedia melalui PDF.</p>
         </div>
     </div>
     <div class="buttons">
