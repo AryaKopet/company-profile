@@ -14,6 +14,7 @@
     <style>
         body {
             perspective: 1000px;
+            margin-bottom: 12px;
         }
 
         .box-preview {
@@ -117,6 +118,11 @@
                             <div class="mb-4">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $email ?? '') }}" required>
+                            </div>
+                            <!-- Nama box/projek/partisi -->
+                            <div class="mb-4">
+                                <label for="nama_box" class="form-label">Nama Projek/Box/Partisi</label>
+                                <input type="text" name="nama_box" id="nama_box" class="form-control" value="{{ old('nama_box') }}" required>
                             </div>
                             <!-- Memastikan pengambilan data benar -->
                             <!-- Memastikan elemen select memuat data bahan material dan frame dari database -->
