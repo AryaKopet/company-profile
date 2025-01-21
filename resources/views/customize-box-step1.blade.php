@@ -84,7 +84,7 @@
                                 <select name="location" id="location" class="form-select" required>
                                     <option value="" disabled selected>pilih lokasi anda</option>
                                     <option value="jabodetabek">Jabodetabek</option>
-                                    <option value="luar">Luar(Jabodetabek)</option>
+                                    <option value="luar (Jabodetabek)">Luar (Jabodetabek)</option>
                                 </select>
                             </div>
 

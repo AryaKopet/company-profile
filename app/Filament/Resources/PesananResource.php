@@ -59,7 +59,8 @@ class PesananResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id_pesanan')->label('ID Pesanan')->sortable(),
-                Tables\Columns\TextColumn::make('email')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('email')->label('Email Pelanggan')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('nama_box')->label('Nama Box/Projek/Partisi')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('bahan_material')->label('Bahan Material'),
                 Tables\Columns\TextColumn::make('frame')->label('Frame'),
                 Tables\Columns\TextColumn::make('panjang')->label('Panjang (mm)'),
