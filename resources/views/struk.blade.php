@@ -86,11 +86,11 @@
         <div class="date">
             <p>Tanggal: {{ now()->format('d-m-Y') }}</p>
         </div>
-        <p>Nomor Struk: {{ $strukData['nomor_struk'] }}</p>
+        <p>Nomor Surat: {{ $strukData['nomor_struk'] }}</p>
         <div class="content">
             <p>Kepada Yth,</p>
             <p>Bapak/Ibu {{ $strukData['customer']['nama'] }}</p>
-            <p>Terima kasih atas kunjungan Anda ke website kami. Berikut adalah detail pemesanan Anda:</p>
+            <p>Terima kasih atas kunjungan anda pada website kami. Berikut merupakan detail surat penawaran dari pesanan anda:</p>
 
             <h2 class="section-title">Data Pelanggan</h2>
             <ul>
@@ -120,7 +120,7 @@
     </div>
     <div class="buttons">
         <a href="{{ url('/') }}" class="btn btn-secondary me-2 px-4 py-2">Selesai</a>
-        <a href="{{ route('cetak.struk', ['id' => $strukData['customer']['email']]) }}" class="btn btn-primary">Cetak Struk</a>
+        <a href="{{ route('cetak.struk', ['id' => $strukData['customer']['email']]) }}" class="btn btn-primary">Cetak Surat Penawaran</a>
     </div>
 
     <!-- Bootstrap JS -->
