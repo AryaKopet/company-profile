@@ -60,6 +60,7 @@ class CustomerController extends Controller
         // Validasi input
         $validated = $request->validate([
             'email' => 'required|email|exists:pelanggan,email',
+            'nama_box' => 'required|string|max:255',
             'material_id' => 'required|exists:materials,id_material',
             'frame' => 'required|exists:materials,id_material',
             'panjang' => 'required|integer|min:1',
@@ -123,6 +124,7 @@ class CustomerController extends Controller
         // Simpan data pesanan beserta harga
         Pesanan::create([
             'email' => $validated['email'],
+            'nama_box' => $validated['nama_box'],
             'bahan_material' => $material->barang,
             'frame' => $frame->barang,
             'panjang' => $validated['panjang'],
@@ -130,6 +132,14 @@ class CustomerController extends Controller
             'tinggi' => $validated['tinggi'],
             'harga' => round($totalHargaProduksi, 2), // Simpan harga
         ]);
-        return redirect()->route('generate.struk', $validated);
+        return redirect()->route('generate.struk', [
+            'email' => $validated['email'],
+            'nama_box' => $validated['nama_box'],
+            'material_id' => $validated['material_id'],
+            'frame_id' => $validated['frame'],
+            'panjang' => $validated['panjang'],
+            'lebar' => $validated['lebar'],
+            'tinggi' => $validated['tinggi'],
+        ]);
     }
 }
