@@ -122,7 +122,7 @@ class CustomerController extends Controller
         $totalHargaProduksi = $hargaTotalMaterial + $hargaJasa + $profit;
 
         // Simpan data pesanan beserta harga
-        Pesanan::create([
+        $pesanan = Pesanan::create([
             'email' => $validated['email'],
             'nama_box' => $validated['nama_box'],
             'bahan_material' => $material->barang,
@@ -132,6 +132,11 @@ class CustomerController extends Controller
             'tinggi' => $validated['tinggi'],
             'harga' => round($totalHargaProduksi, 2), // Simpan harga
         ]);
+
+        // Data untuk struk
+        // add 'id_pesanan' to validated
+        $validated['id_pesanan'] = $pesanan->id_pesanan;
+        $validated['total_harga']= $pesanan->harga; 
         return redirect()->route('generate.struk',$validated);
     }
 }
