@@ -133,7 +133,7 @@ class CustomerController extends Controller
             'harga' => round($totalHargaProduksi, 2), // Simpan harga
         ]);
 
-        // Data untuk struk
+        // Lempat data ke request
         // add 'id_pesanan' to validated
         $validated['id_pesanan'] = $pesanan->id_pesanan;
         $validated['total_harga']= $pesanan->harga; 
