@@ -112,7 +112,7 @@
         <small>
         <p><strong>Note:</strong></p>
         <p>Harga pada surat penawaran ini bisa berubah sewaktu-waktu, karena harga <br>pada surat penawaran ini belum merupakan harga final dari produksi box</p>
-        <p>TOlong hubungi marketing kami untuk pemesanan lebih lanjut</p>
+        <p>Tolong hubungi marketing kami untuk pemesanan lebih lanjut</p>
         </small>
     </div>
 </body>
