@@ -17,7 +17,10 @@ class PelangganResource extends Resource
     protected static ?string $navigationLabel = 'Pelanggan';
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationGroup = 'Shop';
-
+    public static function getNavigationBadge(): ?string
+    {
+        return Pelanggan::count();
+    }
     public static function form(Form $form): Form
     {
         return $form
