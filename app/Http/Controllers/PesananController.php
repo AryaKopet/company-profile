@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class PesananController extends Controller
 
     public function generateStruk(Request $request)
     {
-        // Ambil data pelanggan
+        // Ambil data pelanggan 
         $pelanggan = Pelanggan::where('email', $request->email)->first();
         if (!$pelanggan) {
             return back()->withErrors(['error' => 'Pelanggan tidak ditemukan.']);
@@ -34,7 +35,7 @@ class PesananController extends Controller
         ];
 
         // Ambil data customisasi
-        $customization = $request->only(['material_id','nama_box', 'frame', 'panjang', 'lebar', 'tinggi']);
+        $customization = $request->only(['material_id', 'nama_box', 'frame', 'panjang', 'lebar', 'tinggi']);
         $material = Material::find($customization['material_id']);
         $frame = Material::find($customization['frame']);
 
