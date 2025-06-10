@@ -26,31 +26,31 @@ class PesananResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('email')
-                ->required()
-                ->email()
-                ->maxLength(255),
-            Forms\Components\Select::make('bahan_material')
-                ->options([
-                    'impraboard_t3' => 'Impraboard T3',
-                    'impraboard_t5' => 'Impraboard T5',
-                    'kardus' => 'Kardus',
-                ])
-                ->required(),
-            Forms\Components\Select::make('frame')
-                ->options([
-                    'frame_injection' => 'Frame Injection',
-                    'frame_aluminium' => 'Frame Aluminium',
-                ])
-                ->required(),
-            Forms\Components\TextInput::make('panjang')
-                ->required()
-                ->numeric(),
-            Forms\Components\TextInput::make('lebar')
-                ->required()
-                ->numeric(),
-            Forms\Components\TextInput::make('tinggi')
-                ->required()
-                ->numeric(),
+                    ->required()
+                    ->email()
+                    ->maxLength(255),
+                Forms\Components\Select::make('bahan_material')
+                    ->options([
+                        'impraboard_t3' => 'Impraboard T3',
+                        'impraboard_t5' => 'Impraboard T5',
+                        'kardus' => 'Kardus',
+                    ])
+                    ->required(),
+                Forms\Components\Select::make('frame')
+                    ->options([
+                        'frame_injection' => 'Frame Injection',
+                        'frame_aluminium' => 'Frame Aluminium',
+                    ])
+                    ->required(),
+                Forms\Components\TextInput::make('panjang')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('lebar')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('tinggi')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -72,10 +72,10 @@ class PesananResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                tables\Actions\DeleteAction::make(),
-            ])
+            // ->actions([
+            //     Tables\Actions\EditAction::make(),
+            //     tables\Actions\DeleteAction::make(),
+            // ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
