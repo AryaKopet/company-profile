@@ -21,9 +21,12 @@ class CustomerController extends Controller
         // Validasi input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:pelanggan,email',
+            'email' => 'required|email',
             'phone' => 'required|string|max:20',
-            'location' => 'required|in:jabodetabek,luar (Jabodetabek)',
+            'location' => 'required|in:jabodetabek,luar',
+            'provinsi' => 'required_if:location,luar',
+            'kota' => 'required_if:location,luar',
+            'alamat' => 'required_if:location,luar',
         ]);
 
         // Simpan data pelanggan
@@ -32,6 +35,9 @@ class CustomerController extends Controller
             'email' => $validated['email'],
             'no_telepon' => $validated['phone'],
             'lokasi' => $validated['location'],
+            'provinsi' => $request->input('provinsi'),
+            'kota' => $request->input('kota'),
+            'alamat' => $request->input('alamat'),
         ]);
 
         // Simpan email ke session
@@ -113,9 +119,9 @@ class CustomerController extends Controller
         ];
 
         $hargaTotalMaterial = $hargaBox + $hargaFrame +
-                            (4 * $components['corner']) + (2 * $components['handle']) +
-                            (2 * $components['kanban']) + (16 * $components['screw']) +
-                            (16 * $components['mata_itik']) + $components['printing'];
+            (4 * $components['corner']) + (2 * $components['handle']) +
+            (2 * $components['kanban']) + (16 * $components['screw']) +
+            (16 * $components['mata_itik']) + $components['printing'];
 
         $hargaJasa = $components['process'] + $components['die_cut'] + $components['transport'];
         $profit = $hargaTotalMaterial * 0.3;
@@ -136,7 +142,7 @@ class CustomerController extends Controller
         // Lempat data ke request
         // add 'id_pesanan' to validated
         $validated['id_pesanan'] = $pesanan->id_pesanan;
-        $validated['total_harga']= $pesanan->harga; 
-        return redirect()->route('generate.struk',$validated);
+        $validated['total_harga'] = $pesanan->harga;
+        return redirect()->route('generate.struk', $validated);
     }
 }
