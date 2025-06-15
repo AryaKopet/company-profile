@@ -21,8 +21,14 @@ class PesananController extends Controller
 
     public function generateStruk(Request $request)
     {
-        // Ambil data pelanggan 
-        $pelanggan = Pelanggan::where('email', $request->email)->first();
+        // Ambil pesanan terbaru berdasarkan email
+        $pesanan = Pesanan::where('email', $request->email)->latest()->first();
+        if (!$pesanan) {
+            return back()->withErrors(['error' => 'Pesanan tidak ditemukan.']);
+        }
+
+        // Ambil data pelanggan berdasarkan email yang sama persis dengan pesanan
+        $pelanggan = Pelanggan::where('email', $pesanan->email)->latest()->first();
         if (!$pelanggan) {
             return back()->withErrors(['error' => 'Pelanggan tidak ditemukan.']);
         }
@@ -34,7 +40,7 @@ class PesananController extends Controller
             'lokasi' => $pelanggan->lokasi,
         ];
 
-        // Ambil data customisasi
+        // Ambil data customisasi dari request
         $customization = $request->only(['material_id', 'nama_box', 'frame', 'panjang', 'lebar', 'tinggi']);
         $material = Material::find($customization['material_id']);
         $frame = Material::find($customization['frame']);
@@ -47,7 +53,7 @@ class PesananController extends Controller
         $customization['frame_name'] = $frame->barang ?? 'Frame tidak ditemukan';
 
         // Generate nomor struk
-        $nomorStruk = $this->generateNomorStruk($request->id_pesanan);
+        $nomorStruk = $this->generateNomorStruk($pesanan->id_pesanan);
 
         // Data untuk struk
         $strukData = [
@@ -59,6 +65,7 @@ class PesananController extends Controller
 
         return view('struk', compact('strukData'));
     }
+
 
     public function cetakStruk($id)
     {
