@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
             margin: 0 0 10px 0;
             padding: 0;
         }
+
         .container {
             max-width: 800px;
             background: #fff;
@@ -23,51 +25,62 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
+
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .header img {
             max-width: 120px;
         }
+
         .header h1 {
             font-size: 26px;
             margin: 10px 0;
             font-weight: bold;
         }
+
         .header p {
             font-size: 14px;
             color: #555;
         }
+
         .date {
             text-align: right;
             font-size: 14px;
             margin-bottom: 20px;
             color: #555;
         }
+
         .section-title {
             font-size: 18px;
             font-weight: bold;
             margin-top: 20px;
             color: #333;
         }
+
         .content ul {
             padding-left: 20px;
         }
+
         .content ul li {
             margin-bottom: 5px;
             font-size: 14px;
             color: #555;
         }
+
         .total {
             font-size: 18px;
             font-weight: bold;
             margin-top: 20px;
         }
+
         .buttons {
             margin-top: 30px;
             text-align: center;
         }
+
         .buttons .btn {
             padding: 10px 20px;
             font-size: 16px;
@@ -75,6 +88,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -130,4 +144,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
