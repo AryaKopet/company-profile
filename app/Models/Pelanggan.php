@@ -18,5 +18,5 @@ class Pelanggan extends Model
     {
         return $this->hasMany(Pesanan::class, 'id_pelanggan', 'id');
     }
+    public $timestamps = true;
 }
-
