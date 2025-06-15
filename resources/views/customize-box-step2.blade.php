@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PT.SHI - Custom Material</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('assets/logo.png') }}" type="image/png">
 
@@ -80,6 +81,7 @@
         }
     </style>
 </head>
+
 <body>
     @extends('layouts.app')
 
@@ -132,9 +134,9 @@
                                 <select name="material_id" id="material_id" class="form-select" required>
                                     <option value="" disabled selected>Pilih Material</option>
                                     @forelse ($materials as $material)
-                                        <option value="{{ $material->id_material }}">{{ $material->barang }}</option>
+                                    <option value="{{ $material->id_material }}">{{ $material->barang }}</option>
                                     @empty
-                                        <option value="" disabled>Tidak ada material tersedia</option>
+                                    <option value="" disabled>Tidak ada material tersedia</option>
                                     @endforelse
                                 </select>
                             </div>
@@ -144,9 +146,9 @@
                                 <select name="frame" id="frame_id" class="form-select" required>
                                     <option value="" disabled selected>Pilih Frame</option>
                                     @forelse ($frames as $frame)
-                                        <option value="{{ $frame->id_material }}">{{ $frame->barang }}</option>
+                                    <option value="{{ $frame->id_material }}">{{ $frame->barang }}</option>
                                     @empty
-                                        <option value="" disabled>Tidak ada frame tersedia</option>
+                                    <option value="" disabled>Tidak ada frame tersedia</option>
                                     @endforelse
                                 </select>
                             </div>
@@ -171,13 +173,13 @@
                             </div>
                             <br>
                             @if($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                             @endif
                         </form>
                     </div>
@@ -189,7 +191,8 @@
     <script>
         let isDragging = false;
         let startX, startY;
-        let currentX = -20, currentY = 30;
+        let currentX = -20,
+            currentY = 30;
 
         const cube = document.getElementById('cube');
 
@@ -251,4 +254,5 @@
     </script>
     @endsection
 </body>
+
 </html>
