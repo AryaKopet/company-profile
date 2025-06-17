@@ -89,7 +89,7 @@ class PesananController extends Controller
                 'nama' => $customer->nama,
                 'email' => $customer->email,
                 'no_telepon' => $customer->no_telepon,
-                'lokasi' => $customer->lokasi,
+                'lokasi' => $pesanan->lokasi,
             ],
             'customization' => [
                 'nama_box' => $pesanan->nama_box,
