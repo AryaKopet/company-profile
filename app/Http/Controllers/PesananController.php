@@ -107,4 +107,42 @@ class PesananController extends Controller
         $pdf = Pdf::loadView('struk-pdf', compact('strukData'));
         return $pdf->download('surat_penawaran.pdf');
     }
+
+    // Fungsi untuk admin bisa mencetak struk pesanan pelanggan dari dashboard filament
+    public function adminCetakStruk($id)
+    {
+        $pesanan = Pesanan::where('id_pesanan', $id)->first();
+        if (!$pesanan) {
+            abort(404, 'Pesanan tidak ditemukan.');
+        }
+
+        $pelanggan = Pelanggan::where('email', $pesanan->email)->latest()->first();
+        if (!$pelanggan) {
+            abort(404, 'Pelanggan tidak ditemukan.');
+        }
+
+        $nomorStruk = $this->generateNomorStruk($pesanan->id_pesanan);
+
+        $strukData = [
+            'customer' => [
+                'nama' => $pelanggan->nama,
+                'email' => $pelanggan->email,
+                'no_telepon' => $pelanggan->no_telepon,
+                'lokasi' => $pelanggan->lokasi,
+            ],
+            'customization' => [
+                'nama_box' => $pesanan->nama_box,
+                'material_name' => $pesanan->bahan_material,
+                'frame_name' => $pesanan->frame,
+                'panjang' => $pesanan->panjang,
+                'lebar' => $pesanan->lebar,
+                'tinggi' => $pesanan->tinggi,
+            ],
+            'total_harga' => $pesanan->harga,
+            'nomor_struk' => $nomorStruk,
+        ];
+
+        $pdf = Pdf::loadView('struk-pdf', compact('strukData'));
+        return $pdf->download("struk-{$id}.pdf");
+    }
 }
