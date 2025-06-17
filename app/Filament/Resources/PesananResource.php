@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\URL;
 
 class PesananResource extends Resource
 {
@@ -51,6 +53,9 @@ class PesananResource extends Resource
                 Forms\Components\TextInput::make('tinggi')
                     ->required()
                     ->numeric(),
+                Forms\Components\TextInput::make('lokasi')
+                    ->required()
+                    ->string(),
             ]);
     }
 
@@ -67,15 +72,22 @@ class PesananResource extends Resource
                 Tables\Columns\TextColumn::make('lebar')->label('Lebar (mm)'),
                 Tables\Columns\TextColumn::make('tinggi')->label('Tinggi (mm)'),
                 Tables\Columns\TextColumn::make('harga')->label('Harga'),
+                Tables\Columns\TextColumn::make('lokasi')->label('lokasi'),
                 Tables\Columns\TextColumn::make('created_at')->label('Dibuat Pada')->dateTime('d M Y H:i'),
             ])
             ->filters([
                 //
             ])
-            // ->actions([
-            //     Tables\Actions\EditAction::make(),
-            //     tables\Actions\DeleteAction::make(),
-            // ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Action::make('cetakStruk')
+                    ->label('Cetak Struk')
+                    ->icon('heroicon-o-printer')
+                    ->color('success')
+                    ->url(fn(Pesanan $record) => route('admin.cetak.struk', ['id' => $record->id_pesanan]))
+                    ->openUrlInNewTab(),
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

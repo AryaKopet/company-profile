@@ -21,6 +21,7 @@ class Pesanan extends Model
         'panjang',
         'lebar',
         'tinggi',
-        'harga'
+        'harga',
+        'lokasi'
     ];
 }
