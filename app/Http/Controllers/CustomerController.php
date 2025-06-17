@@ -9,16 +9,13 @@ use App\Models\Pesanan;
 
 class CustomerController extends Controller
 {
-    // Menampilkan Step 1
     public function showStep1()
     {
         return view('customize-box-step1');
     }
 
-    // Menangani form Step 1
     public function submitStep1(Request $request)
     {
-        // Validasi input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
@@ -33,7 +30,6 @@ class CustomerController extends Controller
             ? $request->input('provinsi') . ', ' . $request->input('kota') . ', ' . $request->input('alamat')
             : $validated['location'];
 
-        // Simpan data pelanggan
         Pelanggan::create([
             'nama' => $validated['name'],
             'email' => $validated['email'],
@@ -41,13 +37,12 @@ class CustomerController extends Controller
             'lokasi' => $lokasi,
         ]);
 
-        // Simpan email ke session
         $request->session()->put('email', $validated['email']);
+        $request->session()->put('lokasi', $lokasi); // ✅ simpan lokasi ke session juga
 
         return redirect()->route('customize.box.step2');
     }
 
-    // Menampilkan Step 2
     public function showStep2(Request $request)
     {
         $materials = Material::where('kategori', 'Material')->get();
@@ -61,10 +56,8 @@ class CustomerController extends Controller
         return view('customize-box-step2', compact('email', 'materials', 'frames'));
     }
 
-    // Menangani form Step 2
     public function submitStep2(Request $request)
     {
-        // Validasi input
         $validated = $request->validate([
             'email' => 'required|email|exists:pelanggan,email',
             'nama_box' => 'required|string|max:255',
@@ -75,11 +68,9 @@ class CustomerController extends Controller
             'tinggi' => 'required|integer|min:1',
         ]);
 
-        // Ambil data material dan frame
         $material = Material::find($validated['material_id']);
         $frame = Material::find($validated['frame']);
 
-        // Hitung harga berdasarkan logika yang ada
         $sparePond = 10;
         $kupingan = 40;
         $panjangMaterial = 3000;
@@ -91,13 +82,11 @@ class CustomerController extends Controller
 
         $panjangBody = $validated['tinggi'] + $validated['lebar'] + $validated['tinggi'] + $sparePond;
         $lebarBody = ($panjangBody - 10) + $sparePond;
-
         $lembaranBody = ($panjangMaterial / $panjangBody) * ($lebarMaterial / $lebarBody);
         $hargaBody = $material->harga / $customRound($lembaranBody);
 
         $panjangPintu = $validated['tinggi'] + $kupingan + $sparePond;
         $lebarPintu = $kupingan + $validated['lebar'] + $kupingan + $sparePond;
-
         $lembaranPintu = ($panjangMaterial / $panjangPintu) * ($lebarMaterial / $lebarPintu);
         $hargaPintu = $material->harga / $customRound($lembaranPintu);
 
@@ -128,7 +117,10 @@ class CustomerController extends Controller
         $profit = $hargaTotalMaterial * 0.3;
         $totalHargaProduksi = $hargaTotalMaterial + $hargaJasa + $profit;
 
-        // Simpan data pesanan beserta harga
+        // Ambil lokasi dari session
+        $lokasi = $request->session()->get('lokasi') ?? '-';
+
+        // ✅ Simpan ke tabel pesanan lengkap dengan lokasi
         $pesanan = Pesanan::create([
             'email' => $validated['email'],
             'nama_box' => $validated['nama_box'],
@@ -137,11 +129,10 @@ class CustomerController extends Controller
             'panjang' => $validated['panjang'],
             'lebar' => $validated['lebar'],
             'tinggi' => $validated['tinggi'],
-            'harga' => round($totalHargaProduksi, 2), // Simpan harga
+            'harga' => round($totalHargaProduksi, 2),
+            'lokasi' => $lokasi, // ✅ tambahkan lokasi ke pesanan
         ]);
 
-        // Lempat data ke request
-        // add 'id_pesanan' to validated
         $validated['id_pesanan'] = $pesanan->id_pesanan;
         $validated['total_harga'] = $pesanan->harga;
         return redirect()->route('generate.struk', $validated);
