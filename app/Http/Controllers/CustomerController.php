@@ -29,15 +29,16 @@ class CustomerController extends Controller
             'alamat' => 'required_if:location,luar',
         ]);
 
+        $lokasi = $validated['location'] === 'luar'
+            ? $request->input('provinsi') . ', ' . $request->input('kota') . ', ' . $request->input('alamat')
+            : $validated['location'];
+
         // Simpan data pelanggan
         Pelanggan::create([
             'nama' => $validated['name'],
             'email' => $validated['email'],
             'no_telepon' => $validated['phone'],
-            'lokasi' => $validated['location'],
-            'provinsi' => $request->input('provinsi'),
-            'kota' => $request->input('kota'),
-            'alamat' => $request->input('alamat'),
+            'lokasi' => $lokasi,
         ]);
 
         // Simpan email ke session
