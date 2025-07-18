@@ -38,7 +38,7 @@ class CustomerController extends Controller
         ]);
 
         $request->session()->put('email', $validated['email']);
-        $request->session()->put('lokasi', $lokasi); // ✅ simpan lokasi ke session juga
+        $request->session()->put('lokasi', $lokasi);
 
         return redirect()->route('customize.box.step2');
     }
